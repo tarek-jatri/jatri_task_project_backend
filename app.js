@@ -2,6 +2,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 
 //=> Internal Imports
@@ -28,6 +29,7 @@ mongoose
 //=> Request Parser
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cors());
 
 
 //=> Routing Setup

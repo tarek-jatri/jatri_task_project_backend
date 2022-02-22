@@ -15,7 +15,7 @@ const addUserValidators = [
         .trim()
         .custom(async (value) => {
             try {
-                const user = await User.find({jatriId: value});
+                const user = await User.findOne({jatriId: value});
                 if (user) {
                     throw createError("Jatri ID already in use");
                 }
