@@ -1,5 +1,5 @@
 // external imports
-const { check, validationResult } = require("express-validator");
+const {check, validationResult} = require("express-validator");
 
 // validating user inputs
 const doLoginValidators = [
@@ -23,7 +23,7 @@ const doLoginValidationHandler = (req, res, next) => {
     if (Object.keys(mappedErrors).length === 0) {
         next();
     } else {
-        res.render("index", {
+        res.status(500).json({
             data: {
                 username: req.body.username,
             },
