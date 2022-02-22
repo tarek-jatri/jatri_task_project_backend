@@ -13,6 +13,7 @@ const {
 
 const loginRouter = require("./router/loginRouter");
 const adminRouter = require("./router/adminRouter");
+const userRouter = require("./router/userRouter");
 
 //=> setting
 const app = express();
@@ -35,6 +36,7 @@ app.use(cors());
 //=> Routing Setup
 app.use("/admin", adminRouter);
 app.use("/login", loginRouter);
+app.use("/user", userRouter);
 
 //=> Error Handling
 // 404 Not found handler
