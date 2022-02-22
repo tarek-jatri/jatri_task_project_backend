@@ -1,5 +1,5 @@
 // external imports
-const {check, validationResult} = require("express-validator");
+const { check, validationResult } = require("express-validator");
 const createError = require("http-errors");
 
 // internal imports
@@ -8,12 +8,12 @@ const User = require("../../models/People");
 // creating validator for user
 const addUserValidators = [
     check("jatriId")
-        .isLength({min: 6})
+        .isLength({ min: 6 })
         .withMessage("Jatri ID is required")
         .trim()
         .custom(async (value) => {
             try {
-                const user = await User.findOne({jatriId: value});
+                const user = await User.findOne({ jatriId: value });
                 if (user) {
                     throw createError("Jatri ID already in use");
                 }
@@ -22,9 +22,9 @@ const addUserValidators = [
             }
         }),
     check("name")
-        .isLength({min: 1})
+        .isLength({ min: 1 })
         .withMessage("Name is required")
-        .isAlpha("en-US", {ignore: " -."})
+        .isAlpha("en-US", { ignore: " -." })
         .withMessage("Name must not contain anything other than alphabet")
         .trim(),
     check("email")
@@ -33,7 +33,7 @@ const addUserValidators = [
         .trim()
         .custom(async (value) => {
             try {
-                const user = await User.findOne({email: value});
+                const user = await User.findOne({ email: value });
                 if (user) {
                     throw createError("Email already in use");
                 }
@@ -49,7 +49,7 @@ const addUserValidators = [
         .trim()
         .custom(async (value) => {
             try {
-                const user = await User.findOne({mobile: value});
+                const user = await User.findOne({ mobile: value });
                 if (user) {
                     throw createError("Mobile already in use");
                 }
@@ -63,11 +63,11 @@ const addUserValidators = [
             "Password must be at least 8 characters long & should contain at least 1 lowercase, 1 uppercase, 1 number & 1 symbol"
         ),
     check("designation")
-        .isLength({min: 1})
+        .isLength({ min: 1 })
         .withMessage("Designation cannot be empty")
         .trim(),
     check("lineManager")
-        .isLength({min: 1})
+        .isLength({ min: 1 })
         .withMessage("Line Manager cannot be empty")
         .trim(),
     check("nid")

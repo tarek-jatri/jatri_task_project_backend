@@ -2,6 +2,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 
@@ -29,8 +30,11 @@ mongoose
 
 //=> Request Parser
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
+//=> Parse Cookies
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 
 //=> Routing Setup

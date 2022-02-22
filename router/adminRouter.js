@@ -2,8 +2,8 @@
 const express = require('express');
 
 // internal imports
-const {createUser} = require("../controller/Admin/User/adminCreateUserController");
-const {addUserValidators, addUserValidationHandler} = require("../middlewares/user/userValidator");
+const { createUser } = require("../controller/Admin/User/adminCreateUserController");
+const { addUserValidators, addUserValidationHandler } = require("../middlewares/user/userValidator");
 
 const router = express.Router();
 
