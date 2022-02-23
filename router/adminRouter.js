@@ -2,8 +2,9 @@
 const express = require('express');
 
 // internal imports
-const { createUser } = require("../controller/Admin/User/adminCreateUserController");
-const { addUserValidators, addUserValidationHandler } = require("../middlewares/user/userValidator");
+const {createUser} = require("../controller/Admin/User/adminCreateUserController");
+const {addUserValidators, addUserValidationHandler} = require("../middlewares/user/userValidator");
+const authTokenMiddleware = require("../middlewares/common/authenticateToken");
 
 const router = express.Router();
 
@@ -15,6 +16,6 @@ router.get("/", (req, res) => {
 })
 
 // creating user
-router.post("/user", addUserValidators, addUserValidationHandler, createUser);
+router.post("/user", addUserValidators, addUserValidationHandler, authTokenMiddleware, createUser);
 
 module.exports = router;

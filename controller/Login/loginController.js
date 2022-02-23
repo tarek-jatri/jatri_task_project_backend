@@ -11,7 +11,7 @@ async function login(req, res, next) {
     try {
         //    find the user with mobile / email+
         const user = await User.findOne({
-            $or: [{ email: req.body.username }, { mobile: req.body.username }]
+            $or: [{email: req.body.username}, {mobile: req.body.username}]
         });
 
         if (user && user._id) {
@@ -39,7 +39,8 @@ async function login(req, res, next) {
                     signed: true,
                 });
                 res.status(200).json({
-
+                    userObj,
+                    token,
                     message: "Login Successful"
                 });
             } else {

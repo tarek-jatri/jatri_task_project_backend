@@ -8,12 +8,9 @@ const attendanceSchema = mongoose.Schema(
             type: mongoose.Types.ObjectId,
             ref: "People"
         },
-        time: {
-            type: String,
-            required: true,
-        },
-        date: {
+        timeDate: {
             type: Date,
+            required: true,
         },
         status: {
             type: String,

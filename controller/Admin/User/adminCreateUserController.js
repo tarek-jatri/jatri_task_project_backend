@@ -11,7 +11,9 @@ async function createUser(req, res, next) {
             ...req.body,
             password: hashedPassword,
         });
+
         await newUser.save();
+
         res.status(200).json({
             message: "user saved successfully",
         });
@@ -22,9 +24,6 @@ async function createUser(req, res, next) {
                     msg: "Unknown error occurred from user controller",
                 },
             },
-        });
-        res.status(500).json({
-            error
         });
     }
 }
