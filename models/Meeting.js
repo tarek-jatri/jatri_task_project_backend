@@ -9,15 +9,12 @@ const meetingSchema = mongoose.Schema(
             ref: "People"
         },
         fromTime: {
-            type: String,
+            type: Date,
             required: true,
         },
         toTime: {
-            type: String,
-            required: true,
-        },
-        date: {
             type: Date,
+            required: true,
         },
         status: {
             type: String,

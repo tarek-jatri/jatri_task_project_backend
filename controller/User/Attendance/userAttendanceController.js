@@ -19,6 +19,7 @@ async function addAttendance(req, res, next) {
         // check if entry on that day already exists or not
         const date = timestamp.toISOString().split("T")[0];
         const isValidDate = await Attendance.findOne({
+            userId: req.userId,
             timeDate: {
                 $gte: new Date(`${date}T00:00:00.000Z`),
                 $lt: new Date(`${date}T12:00:00.000Z`)
@@ -57,6 +58,7 @@ async function getAttendance(req, res, next) {
 
         // now retrieving data from database
         const attendances = await Attendance.find({
+            userId: req.userId,
             timeDate: {
                 $gte: fromDate,
                 $lte: toDate
@@ -64,7 +66,7 @@ async function getAttendance(req, res, next) {
         }).select({
             _id: 0,
             __v: 0,
-        })
+        }).populate("userId", "name");
         res.status(200).json({
             attendances
         });
