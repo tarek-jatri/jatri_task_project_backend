@@ -17,6 +17,7 @@ async function getAttendance(req, res, next) {
                     $lte: toDate
                 }
             })
+            .sort({timeDate: "asc"})
             .select({
                 _id: 0,
                 __v: 0,

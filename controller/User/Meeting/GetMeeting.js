@@ -19,24 +19,42 @@ async function getMeetingDetails(req, res, next) {
         }
 
         // getting meetings
-        const meetings = await Meeting
-            .find({
-                userId: req.userId,
-                fromTime: {
-                    $gte: date
-                },
-                status: "pending"
-            })
-            .select({
-                _id: 0,
-                __v: 0,
-            })
-            .populate("userId", "name");
+        let meetings;
+        // checking if it's requested by user/admin
+        if (req.userRole === "user") {
+            meetings = await Meeting
+                .find({
+                    userId: req.userId,
+                    fromTime: {
+                        $gte: date
+                    },
+                    status: "pending"
+                })
+                .sort({fromTime: "asc"})
+                .select({
+                    _id: 0,
+                    __v: 0,
+                })
+                .populate("userId", "name");
+        } else {
+            meetings = await Meeting
+                .find({
+                    fromTime: {
+                        $gte: date
+                    },
+                    status: "pending"
+                })
+                .sort({fromTime: "asc"})
+                .select({
+                    _id: 0,
+                    __v: 0,
+                })
+                .populate("userId", "name");
+        }
 
 
         res.status(200).json({
             meetings,
-            message: "Here"
         });
     } catch (error) {
         next(createError(error));
