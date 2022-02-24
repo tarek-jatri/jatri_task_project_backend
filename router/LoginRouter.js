@@ -3,7 +3,7 @@ const express = require("express");
 
 //=> internal imports
 const {doLoginValidators, doLoginValidationHandler} = require("../middlewares/login/loginValidator");
-const {login} = require("../controller/Login/loginController");
+const {login} = require("../controller/Login/LoginController");
 const router = express.Router();
 
 

@@ -2,7 +2,7 @@
 const express = require('express');
 
 // internal imports
-const {createUser} = require("../controller/Admin/User/adminCreateUserController");
+const {createUser} = require("../controller/Admin/User/AdminCreateUserController");
 const {addUserValidators, addUserValidationHandler} = require("../middlewares/user/userValidator");
 const authTokenMiddleware = require("../middlewares/common/authenticateToken");
 

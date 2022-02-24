@@ -12,9 +12,9 @@ const {
     errorHandler,
 } = require("./middlewares/common/errorHandler");
 
-const loginRouter = require("./router/loginRouter");
-const adminRouter = require("./router/adminRouter");
-const userRouter = require("./router/userRouter");
+const loginRouter = require("./router/LoginRouter");
+const adminRouter = require("./router/AdminRouter");
+const userRouter = require("./router/UserRouter");
 
 //=> setting
 const app = express();

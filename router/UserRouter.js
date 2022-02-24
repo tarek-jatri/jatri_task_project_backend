@@ -2,7 +2,8 @@
 const express = require("express");
 
 //=> internal imports
-const {addAttendance, getAttendance} = require("../controller/User/Attendance/userAttendanceController");
+const {addAttendance, getAttendance} = require("../controller/User/Attendance/UserAttendanceController");
+const {addMeetingRequest, getMeetingDetails} = require("../controller/User/Meeting/UserMeetingController");
 const authTokenMiddleware = require("../middlewares/common/authenticateToken");
 
 const router = express.Router();
@@ -14,5 +15,12 @@ router.post("/attendance", authTokenMiddleware, addAttendance);
 
 // getting attendance
 router.get("/attendance", authTokenMiddleware, getAttendance);
+
+// adding meeting
+router.post("/meeting", authTokenMiddleware, addMeetingRequest);
+
+// getting meeting
+router.get("/meeting", authTokenMiddleware, getMeetingDetails);
+
 
 module.exports = router;
