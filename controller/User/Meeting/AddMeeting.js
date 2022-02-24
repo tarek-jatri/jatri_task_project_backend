@@ -16,6 +16,7 @@ async function addMeetingRequest(req, res, next) {
             userId: req.userId,
             fromTime,
             toTime,
+            comments: req.body.comments,
             status: req.body.status,
         });
 

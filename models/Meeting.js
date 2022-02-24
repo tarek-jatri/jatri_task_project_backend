@@ -16,6 +16,10 @@ const meetingSchema = mongoose.Schema(
             type: Date,
             required: true,
         },
+        comments: {
+            type: String,
+            required: true,
+        },
         status: {
             type: String,
             enum: ["accepted", "rejected", "pending"],
