@@ -31,7 +31,8 @@ async function login(req, res, next) {
                 const token = jwt.sign(userObj, process.env.JWT_SECRET, {
                     expiresIn: process.env.JWT_EXPIRY,
                 });
-
+                res.userId = user._id;
+                res.username = user.name;
                 // setting the token in cookies
                 res.cookie(process.env.COOKIE_NAME, token, {
                     maxAge: process.env.JWT_EXPIRY,
