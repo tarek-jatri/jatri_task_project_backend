@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken");
 const createError = require("http-errors");
 
-//=> Login Check Middleware usign cookie
+//=> Login Check Middleware using cookie
 const authTokenMiddleware = async (req, res, next) => {
     try {
         const token = req.signedCookies[process.env.COOKIE_NAME];
