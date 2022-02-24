@@ -2,13 +2,12 @@
 const jwt = require("jsonwebtoken");
 const createError = require("http-errors");
 
-//=> Login Check Middleware using cookie
+//=> Login Check Middleware usign cookie
 const authTokenMiddleware = async (req, res, next) => {
     try {
         const token = req.signedCookies[process.env.COOKIE_NAME];
         const decodePayload = await jwt.verify(token, process.env.JWT_SECRET);
-        // req.userId = decodePayload._id;
-        console.log(decodePayload.name, res.username);
+        req.userId = decodePayload._id;
         next();
     } catch {
         next(createError("Authentication failed!!!"));
