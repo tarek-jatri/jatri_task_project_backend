@@ -2,20 +2,20 @@
 const express = require('express');
 
 // internal imports
-const {createUser} = require("../controller/Admin/User/AdminCreateUserController");
-const {addUserValidators, addUserValidationHandler} = require("../middlewares/user/userValidator");
-const authTokenMiddleware = require("../middlewares/common/authenticateToken");
+const { createUser, readUserInfos, updateUserInfo } = require("../controller/Admin/User/AdminCreateUserController");
+const { addUserValidators, userValidationHandler, updateUserValidators } = require("../middlewares/user/userValidator");
+const authAdminTokenMiddleware = require("../middlewares/common/authenticateAdminToken");
 
 const router = express.Router();
 
 
-router.get("/", (req, res) => {
-    res.status(200).json({
-        message: "Hello from admin",
-    })
-})
-
 // creating user
-router.post("/user", addUserValidators, addUserValidationHandler, authTokenMiddleware, createUser);
+router.post("/user", addUserValidators, userValidationHandler, authAdminTokenMiddleware, createUser);
+
+// reading user
+router.get("/user", authAdminTokenMiddleware, readUserInfos);
+
+// upadting user
+router.put("/user/update", updateUserValidators, userValidationHandler, authAdminTokenMiddleware, updateUserInfo);
 
 module.exports = router;

@@ -30,7 +30,9 @@ mongoose
 
 //=> Request Parser
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
+
+//=> settings for connection and cookie sharing with frontend
 app.use(cors({
     credentials: true,
     origin: "http://localhost:8081",

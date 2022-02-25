@@ -38,7 +38,7 @@ const peopleSchema = mongoose.Schema(
         },
         role: {
             type: String,
-            enum: ["admin", "user"],
+            enum: ["admin", "user", "super admin"],
             default: "user",
         },
         nid: {
@@ -54,22 +54,5 @@ const peopleSchema = mongoose.Schema(
 const People = mongoose.model("People", peopleSchema);
 
 module.exports = People;
-
-
-// // User JSON
-//
-// {
-//     "jatriId" : "J-0043",
-//     "name" : "Akil Jawad",
-//     "email": "jawad.jatri@gmail.com",
-//     "mobile" : "+8801515288484",
-//     "password" : "@Bir1234",
-//     "designation" : "Software Engineer(Backend)",
-//     "lineManager": "J-0020",
-//     "role" : "admin",
-//     "nid": "000 000 0000"
-// }
-
-
 
 
