@@ -8,15 +8,15 @@ async function updateUserInfo(req, res, next) {
     try {
         // destructuring the request body inputs
         const user = { ...req.body };
-        // deleting the object id from request body
-        delete user._id;
-        // deleting the password from request body if given
-        delete user.password;
+        // // deleting the object id from request body
+        // delete user._id;
+        // // deleting the password from request body if given
+        // delete user.password;
 
         // updating the user's info
         const updateUser = await User
             .findOneAndUpdate({
-                _id: req.body._id,
+                _id: req.params.id,
             }, user, {
                 new: true
             })
