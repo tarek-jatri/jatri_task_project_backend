@@ -1,7 +1,10 @@
-// retrieving attendance data
-const Attendance = require("../../../models/Attendance");
+// external imports
 const createError = require("http-errors");
 
+// internal imports
+const Attendance = require("../../../models/Attendance");
+
+// retrieving attendance data
 async function getAttendance(req, res, next) {
     try {
         // converting string to date
@@ -17,7 +20,7 @@ async function getAttendance(req, res, next) {
                     $lte: toDate
                 }
             })
-            .sort({timeDate: "asc"})
+            .sort({ timeDate: "asc" })
             .select({
                 _id: 0,
                 __v: 0,
