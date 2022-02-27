@@ -1,5 +1,5 @@
 // external imports
-const {check, validationResult} = require("express-validator");
+const {check} = require("express-validator");
 
 // validating user inputs
 const doLoginValidators = [

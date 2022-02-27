@@ -27,12 +27,10 @@ async function getMeetingDetails(req, res, next) {
                     userId: req.userId,
                     fromTime: {
                         $gte: date
-                    },
-                    status: "pending"
+                    }
                 })
                 .sort({fromTime: "asc"})
                 .select({
-                    _id: 0,
                     __v: 0,
                 })
                 .populate("userId", "name");
@@ -41,12 +39,10 @@ async function getMeetingDetails(req, res, next) {
                 .find({
                     fromTime: {
                         $gte: date
-                    },
-                    status: "pending"
+                    }
                 })
                 .sort({fromTime: "asc"})
                 .select({
-                    _id: 0,
                     __v: 0,
                 })
                 .populate("userId", "name");
