@@ -30,7 +30,7 @@ async function getAttendanceStatOfAll(attendances) {
 }
 
 
-async function getAttendanceStat(attendances) {
+async function getAttendanceStat(attendances, totalDays) {
     // using object
     let present = 0, late = 0, absent = 0;
     for (const attendance of attendances) {
@@ -41,10 +41,10 @@ async function getAttendanceStat(attendances) {
         }
     }
 
-    // absent = totalpresent - late;
+    absent = totalDays - present - late;
 
     return {
-        totalEmployee,
+        totalDays,
         present,
         late,
         absent,

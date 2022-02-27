@@ -3,14 +3,14 @@ const createError = require("http-errors");
 
 // internal imports
 const Attendance = require("../../../models/Attendance");
-const getAttendanceStat = require("./AttendanceStatistics");
+const {getAttendanceStatOfAll} = require("./AttendanceStatistics");
 
 
 async function getAttendanceListOfEmployees(req, res, next) {
     /**
-         *  checking if date is given as query or not
-         *  if not then setting current day as date parameter
-         */
+     *  checking if date is given as query or not
+     *  if not then setting current day as date parameter
+     */
     let from, to;
     if (!req.query.date) {
         from = new Date(new Date().toISOString().split("T")[0]);
@@ -22,14 +22,14 @@ async function getAttendanceListOfEmployees(req, res, next) {
 
     // fetching the data
     try {
-        const todaysAttendances = await Attendance
+        const todayAttendances = await Attendance
             .find({
                 timeDate: {
                     $gte: from,
                     $lte: to,
                 }
             })
-            .sort({ timeDate: "asc" })
+            .sort({timeDate: "asc"})
             .select({
                 _id: 0,
                 __v: 0,
@@ -37,12 +37,12 @@ async function getAttendanceListOfEmployees(req, res, next) {
             .populate("userId", "name");
 
         // checking if any attendance is given today
-        if (todaysAttendances && todaysAttendances.length > 0) {
-            // getting the stat of todays attendance list
-            const attendanceStat = await getAttendanceStat(todaysAttendances);
+        if (todayAttendances && todayAttendances.length > 0) {
+            // getting the stat of today's attendance list
+            const attendanceStat = await getAttendanceStatOfAll(todayAttendances);
             res.status(200).json({
                 attendanceStat,
-                todaysAttendances,
+                todayAttendances,
             });
         } else {
             res.status(200).json({

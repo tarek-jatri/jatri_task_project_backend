@@ -1,5 +1,5 @@
 // external imports
-const { check, validationResult } = require("express-validator");
+const {check, validationResult} = require("express-validator");
 
 // validating user inputs
 const doLoginValidators = [
@@ -10,29 +10,9 @@ const doLoginValidators = [
         .withMessage("Mobile number or email is required"),
     check("password")
         .isLength({
-            min: 1
+            min: 8
         })
-        .withMessage("Password is required"),
+        .withMessage("Password must be at least 8 characters"),
 ];
 
-// login validation error handler
-const doLoginValidationHandler = (req, res, next) => {
-    const errors = validationResult(req);
-    const mappedErrors = errors.mapped();
-
-    if (Object.keys(mappedErrors).length === 0) {
-        next();
-    } else {
-        res.status(500).json({
-            data: {
-                username: req.body.username,
-            },
-            errors: mappedErrors,
-        });
-    }
-}
-
-module.exports = {
-    doLoginValidators,
-    doLoginValidationHandler
-}
+module.exports = doLoginValidators;

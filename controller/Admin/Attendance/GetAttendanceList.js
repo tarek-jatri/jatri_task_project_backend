@@ -3,7 +3,7 @@ const createError = require("http-errors");
 
 // internal imports
 const Attendance = require("../../../models/Attendance");
-const getAttendanceStat = require("./AttendanceStatistics");
+const {getAttendanceStat} = require("./AttendanceStatistics");
 
 async function getAttendanceList(req, res, next) {
     try {
@@ -32,7 +32,7 @@ async function getAttendanceList(req, res, next) {
                 $lte: to,
             },
         })
-            .sort({ timeDate: "asc" })
+            .sort({timeDate: "asc"})
             .select({
                 _id: 0,
                 __v: 0,
@@ -41,8 +41,9 @@ async function getAttendanceList(req, res, next) {
 
         // checking if any attendance is available
         if (attendances && attendances.length > 0) {
-            // getting the stat of todays attendance list
-            const attendanceStat = await getAttendanceStat(attendances);
+            // getting the stat of attendance list
+            const totalDays = to.getDate() - from.getDate();
+            const attendanceStat = await getAttendanceStat(attendances, totalDays);
             res.status(200).json({
                 attendanceStat,
                 attendances,

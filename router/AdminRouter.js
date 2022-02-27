@@ -11,12 +11,13 @@ const {
 
 const {
     addUserValidators,
-    userValidationHandler,
     updateUserValidators,
     deleteUserValidator,
-} = require("../middlewares/user/userValidator");
+} = require("../middlewares/user/userValidators");
 
 const authAdminTokenMiddleware = require("../middlewares/common/authenticateAdminToken");
+
+const validationErrorHandler = require("../middlewares/common/validationErrorHandler");
 
 const {
     getAttendanceListOfEmployees,
@@ -30,7 +31,7 @@ const router = express.Router();
 router.post(
     "/user",
     addUserValidators,
-    userValidationHandler,
+    validationErrorHandler,
     authAdminTokenMiddleware,
     createUser
 );
@@ -38,11 +39,11 @@ router.post(
 // reading user
 router.get("/user", authAdminTokenMiddleware, readUserInfos);
 
-// upadting user
+// updating user
 router.put(
     "/user/:id",
     updateUserValidators,
-    userValidationHandler,
+    validationErrorHandler,
     authAdminTokenMiddleware,
     updateUserInfo
 );
@@ -51,7 +52,7 @@ router.put(
 router.delete(
     "/user/:id",
     deleteUserValidator,
-    userValidationHandler,
+    validationErrorHandler,
     authAdminTokenMiddleware,
     deleteUser
 );
@@ -59,7 +60,7 @@ router.delete(
 //=> Admin - Attendance Routes
 /**
  * Adding and viewing own attendance is similar as user attendance
- * so usign user's API instead
+ * so using user's API instead
  */
 
 // getting today's attendance of all employee also given date
@@ -69,7 +70,7 @@ router.get(
     getAttendanceListOfEmployees
 );
 
-// getting current months attendance of given employee
+// getting current month attendance of given employee
 router.get(
     "/attendance/:id",
     deleteUserValidator,
