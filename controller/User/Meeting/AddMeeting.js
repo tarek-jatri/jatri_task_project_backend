@@ -8,8 +8,8 @@ const Meeting = require("../../../models/Meeting");
 async function addMeetingRequest(req, res, next) {
     try {
         // getting the dates
-        const fromTime = new Date(req.body.fromTime);
-        const toTime = new Date(req.body.toTime);
+        const fromTime = new Date(req.body.date + "T" + req.body.fromTime);
+        const toTime = new Date(req.body.date + "T" + req.body.toTime);
 
         // creating meeting obj
         const meetingObj = new Meeting({
