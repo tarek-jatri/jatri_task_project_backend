@@ -34,6 +34,7 @@ async function addAttendance(req, res, next) {
             timeDate: timestamp,
             status,
         });
+
         await attendance.save();
 
         res.status(200).json({
