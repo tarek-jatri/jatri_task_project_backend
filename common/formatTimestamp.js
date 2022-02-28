@@ -1,4 +1,4 @@
-//
+// formatting time and date
 function formatTimestamp(timestamp) {
     const date = timestamp.toISOString().split("T")[0];
     let hours = timestamp.getHours();

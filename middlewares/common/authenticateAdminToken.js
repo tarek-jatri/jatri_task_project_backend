@@ -11,6 +11,7 @@ const authAdminTokenMiddleware = async (req, res, next) => {
             throw createError("Authentication Failed!!!");
         }
         req.userId = decodePayload._id;
+        req.jatriId = decodePayload.jatriId;
         req.username = decodePayload.name;
         req.userRole = decodePayload.role;
         req.userEmail = decodePayload.email;

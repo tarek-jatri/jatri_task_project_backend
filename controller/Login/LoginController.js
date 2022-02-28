@@ -11,7 +11,7 @@ async function login(req, res, next) {
     try {
         //    find the user with mobile / email+
         const user = await User.findOne({
-            $or: [{ email: req.body.username }, { mobile: req.body.username }]
+            $or: [{email: req.body.username}, {mobile: req.body.username}]
         });
 
         if (user && user._id) {
@@ -21,8 +21,8 @@ async function login(req, res, next) {
                 // prepare the user object for token
                 const userObj = {
                     _id: user._id,
+                    jatriId: user.jatriId,
                     name: user.name,
-                    mobile: user.mobile,
                     email: user.email,
                     role: user.role,
                 }

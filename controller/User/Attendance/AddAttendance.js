@@ -1,7 +1,6 @@
 // giving attendance
 const Attendance = require("../../../models/Attendance");
 const createError = require("http-errors");
-const transporter = require("../../../middlewares/email");
 
 async function addAttendance(req, res, next) {
     try {
@@ -41,13 +40,9 @@ async function addAttendance(req, res, next) {
             attendance,
             message: 'Attendance added successfully',
         })
-        // console.log(`${req.userEmail}\n${attendance.timeDate.toString()}\nstatus: ${attendance.status}`);
-        // const result = await transporter.sendMail({
-        //     to: req.userEmail,
-        //     subject: `Jatri Attendance on ${date}`,
-        //     text: `${req.username}\n${attendance.timeDate.toString()}\nstatus: ${attendance.status}`,
-        // });
-        
+
+        req.attendance = attendance;
+        next();
     } catch (error) {
         next(error);
     }

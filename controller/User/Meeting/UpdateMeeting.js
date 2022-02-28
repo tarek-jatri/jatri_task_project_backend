@@ -7,9 +7,9 @@ const Meeting = require("../../../models/Meeting");
 // adding meeting request
 async function updateMeetingDetails(req, res, next) {
     try {
-        // getting the dates and comments
-        const fromTime = new Date(req.body.fromTime);
-        const toTime = new Date(req.body.toTime);
+        // getting the dates
+        const fromTime = new Date(req.body.date + "T" + req.body.fromTime);
+        const toTime = new Date(req.body.date + "T" + req.body.toTime);
         const comments = req.body.comments;
 
         // creating meeting obj
