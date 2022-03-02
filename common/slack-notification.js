@@ -3,8 +3,9 @@ const axios = require("axios");
 async function sendSlackNotification(meeting) {
     const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
     meeting.date = new Date(meeting.date).toLocaleDateString("en-US", options);
+    console.log(meeting);
 
-    await axios.post("https://hooks.slack.com/services/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", {
+    await axios.post("https://hooks.slack.com/services/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", {
         "blocks": [
             {
                 "type": "section",

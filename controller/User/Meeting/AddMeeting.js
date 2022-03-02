@@ -27,7 +27,7 @@ async function addMeetingRequest(req, res, next) {
         res.status(200).json({
             meetingObj,
             message: "Meeting created successfully",
-        })
+        });
 
         // sending slack notification
         await sendSlackNotification({
