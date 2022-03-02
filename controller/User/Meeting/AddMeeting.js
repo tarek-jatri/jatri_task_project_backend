@@ -36,7 +36,7 @@ async function addMeetingRequest(req, res, next) {
             fromTime,
             toTime,
             comments: req.body.comments,
-            status: req.body.status,
+            status: req.body.status ? req.body.status : "pending",
         });
     } catch (error) {
         next(createError(error));
