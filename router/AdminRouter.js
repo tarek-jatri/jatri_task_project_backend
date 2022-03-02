@@ -7,6 +7,7 @@ const {
     readUserInfos,
     updateUserInfo,
     deleteUser,
+    usersList,
 } = require("../controller/Admin/User/AdminCreateUserController");
 const {
     getAttendanceListOfEmployees,
@@ -48,6 +49,9 @@ router.post(
 
 // reading user
 router.get("/user", authAdminTokenMiddleware, readUserInfos);
+
+// getting user list
+router.get("/user/list", authAdminTokenMiddleware, usersList);
 
 // updating user
 router.put(

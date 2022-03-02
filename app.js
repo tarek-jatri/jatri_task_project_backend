@@ -35,10 +35,10 @@ app.use(express.urlencoded({extended: false}));
 //=> settings for connection and cookie sharing with frontend
 app.use(cors({
     credentials: true,
-    origin: "http://localhost:8081",
+    origin: process.env.FRONTEND_URL,
 }));
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:8081");
+    res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
     res.header("Access-Control-Allow-Credentials", true);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
