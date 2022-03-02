@@ -33,8 +33,8 @@ async function addMeetingRequest(req, res, next) {
         await sendSlackNotification({
             username: req.username,
             date: req.body.date,
-            from: req.body.fromTime,
-            to: req.body.toTime,
+            fromTime,
+            toTime,
             comments: req.body.comments,
             status: req.body.status,
         });
