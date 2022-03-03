@@ -15,7 +15,7 @@ async function sendAttendanceMail(req, res, next) {
     const statusStr = req.attendance.status === "late" ? `<strong style="color: red;">${req.attendance.status.toUpperCase()}</strong>` :
         `<strong style="color: green;">${req.attendance.status.toUpperCase()}</strong>`
 
-    const message = `<strong>Jatri ID:</strong> ${req.jatriId}<br><strong>Name:</strong> ${req.username}<br><strong>Date:</strong> ${msgDate}<br><strong>Time:</strong> ${strTime}<br><strong>Status:</strong> ${statusStr}`;
+    const message = `<img src="../../images/jatri-logo.png" alt="Jatri Logo" width="100" height="50"><br><strong>Jatri ID:</strong> ${req.jatriId}<br><strong>Name:</strong> ${req.username}<br><strong>Date:</strong> ${msgDate}<br><strong>Time:</strong> ${strTime}<br><strong>Status:</strong> ${statusStr}`;
     const result = await transporter.sendMail({
         to: req.userEmail,
         subject: `Jatri Attendance on ${date}`,
