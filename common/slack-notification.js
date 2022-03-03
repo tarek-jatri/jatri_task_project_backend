@@ -22,7 +22,7 @@ async function sendSlackNotification(meeting) {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": `*Type:*\nRequest For Meeting Schedule\n*Requested By:*\n${meeting.username}\n*When:*\n${meeting.date}\n*Time:*\n${from.strTime} - ${to.strTime}\n*Comments:*\n"${meeting.comments}"\n*Status:*\n${meeting.status}`,
+                    "text": `*Type:*\nRequest For Meeting Schedule Saimer\n*Requested By:*\n${meeting.username}\n*When:*\n${meeting.date}\n*Time:*\n${from.strTime} - ${to.strTime}\n*Comments:*\n"${meeting.comments}"\n*Status:*\n${meeting.status}`,
                 },
                 "accessory": {
                     "type": "image",
