@@ -3,6 +3,7 @@ const createError = require("http-errors");
 
 // internal imports
 const Meeting = require("../../../models/Meeting");
+const formatTimestamp = require("../../../common/formatTimestamp")
 
 // adding meeting request
 async function getMeetingDetails(req, res, next) {
@@ -48,9 +49,23 @@ async function getMeetingDetails(req, res, next) {
                 .populate("userId", "name");
         }
 
+        const payloads = [];
+        for (const meeting of meetings) {
+            const from = formatTimestamp(meeting.fromTime);
+            const to = formatTimestamp(meeting.toTime);
+            const payload = {
+                meetingId: meeting._id,
+                date: from.date,
+                fromTime: from.strTime,
+                toTime: to.strTime,
+                comments: meeting.comments,
+                status: meeting.status,
+            }
+            payloads.push(payload);
+        }
 
         res.status(200).json({
-            meetings,
+            payloads,
         });
     } catch (error) {
         next(createError(error));

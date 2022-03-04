@@ -7,20 +7,21 @@ const {
     readUserInfos,
     updateUserInfo,
     deleteUser,
+    usersList,
 } = require("../controller/Admin/User/AdminCreateUserController");
+
 const {
     getAttendanceListOfEmployees,
     getAttendanceList,
 } = require("../controller/Admin/Attendance/AdminAttendanceController");
-const {
-    decisionMeeting,
-} = require("../controller/Admin/Meeting/AdminMeetingController");
+const { decisionMeeting } = require("../controller/Admin/Meeting/AdminMeetingController");
 
 const {
     addUserValidators,
     updateUserValidators,
     userIdValidator,
 } = require("../middlewares/user/userValidators");
+
 const authAdminTokenMiddleware = require("../middlewares/common/authenticateAdminToken");
 const validationErrorHandler = require("../middlewares/common/validationErrorHandler");
 const meetingIdValidator = require("../middlewares/meeting/meetingValidators");
@@ -50,6 +51,9 @@ router.post(
 
 // reading user
 router.get("/user", authAdminTokenMiddleware, readUserInfos);
+
+// getting user list
+router.get("/user/list", authAdminTokenMiddleware, usersList);
 
 // updating user
 router.put(

@@ -34,16 +34,20 @@ async function addAttendance(req, res, next) {
             timeDate: timestamp,
             status,
         });
-        await attendance.save();
 
+        await attendance.save();
 
         res.status(200).json({
             attendance,
             message: 'Attendance added successfully',
         })
+
+        req.attendance = attendance;
+        next();
     } catch (error) {
         next(error);
     }
+
 }
 
 module.exports = {

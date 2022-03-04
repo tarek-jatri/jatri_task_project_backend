@@ -9,6 +9,7 @@ const {
     updateMeetingDetails
 } = require("../controller/User/Meeting/UserMeetingController");
 const authUserTokenMiddleware = require("../middlewares/common/authenticateUserToken");
+const sendAttendanceMail = require("../middlewares/common/sendAttendanceMail");
 const meetingIdValidator = require("../middlewares/meeting/meetingValidators");
 const validationErrorHandler = require("../middlewares/common/validationErrorHandler");
 
@@ -19,7 +20,7 @@ const router = express.Router();
 
 //=> User Attendance
 // adding attendance
-router.post("/attendance", authUserTokenMiddleware, addAttendance);
+router.post("/attendance", authUserTokenMiddleware, addAttendance, sendAttendanceMail);
 
 // getting attendance
 router.get("/attendance", authUserTokenMiddleware, getAttendance);

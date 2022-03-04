@@ -7,11 +7,14 @@ const authAdminTokenMiddleware = async (req, res, next) => {
     try {
         const token = req.signedCookies[process.env.COOKIE_NAME];
         const decodePayload = await jwt.verify(token, process.env.JWT_SECRET);
-        req.userId = decodePayload._id;
-        req.userRole = decodePayload.role;
-        if (req.userRole !== "admin") {
+        if (decodePayload.role !== "admin") {
             throw createError("Authentication Failed!!!");
         }
+        req.userId = decodePayload._id;
+        req.jatriId = decodePayload.jatriId;
+        req.username = decodePayload.name;
+        req.userRole = decodePayload.role;
+        req.userEmail = decodePayload.email;
         next();
     } catch {
         next(createError("Authentication failed!!!"));

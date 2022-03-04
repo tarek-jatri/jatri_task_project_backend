@@ -1,6 +1,6 @@
-// external improts
+// external imports
 const createError = require("http-errors");
-// internal improts
+// internal imports
 const User = require("../../../models/People");
 
 
@@ -10,7 +10,7 @@ async function readUserInfos(req, res, next) {
         /**
          * checking if the JatriId is sent with the api or not
          * if JatriId is not send then response with all the users info
-         * otherwise only searched id's info 
+         * otherwise only searched id's info
          */
         const jatriId = req.query.jatriId;
         if (!jatriId) {
@@ -23,7 +23,7 @@ async function readUserInfos(req, res, next) {
                 .populate("lineManager", "name -_id");
         } else {
             users = await User
-                .find({ jatriId: jatriId })
+                .find({jatriId: jatriId})
                 .select({
                     __v: 0,
                     password: 0,
