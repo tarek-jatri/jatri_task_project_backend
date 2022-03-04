@@ -2,7 +2,7 @@
 const express = require("express");
 
 //=> internal imports
-const {addAttendance, getAttendance} = require("../controller/User/Attendance/UserAttendanceController");
+const { addAttendance, getAttendance } = require("../controller/User/Attendance/UserAttendanceController");
 const {
     addMeetingRequest,
     getMeetingDetails,
@@ -15,7 +15,8 @@ const validationErrorHandler = require("../middlewares/common/validationErrorHan
 const router = express.Router();
 
 
-//=> setting up the router
+//=> setting up the route
+
 //=> User Attendance
 // adding attendance
 router.post("/attendance", authUserTokenMiddleware, addAttendance);
