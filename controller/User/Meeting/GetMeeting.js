@@ -30,7 +30,7 @@ async function getMeetingDetails(req, res, next) {
                         $gte: date
                     }
                 })
-                .sort({fromTime: "asc"})
+                .sort({ fromTime: "asc" })
                 .select({
                     __v: 0,
                 })
@@ -42,13 +42,14 @@ async function getMeetingDetails(req, res, next) {
                         $gte: date
                     }
                 })
-                .sort({fromTime: "asc"})
+                .sort({ fromTime: "asc" })
                 .select({
                     __v: 0,
                 })
                 .populate("userId", "name");
         }
 
+        // constructing payload
         const payloads = [];
         for (const meeting of meetings) {
             const from = formatTimestamp(meeting.fromTime);

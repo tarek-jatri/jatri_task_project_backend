@@ -1,6 +1,6 @@
 const axios = require("axios");
-const formatTimestamp = require("./formatTimestamp");
-const dateToDayFormatter = require("./date-time/dateToDayFormatter");
+const formatTimestamp = require("../date-time/formatTimestamp");
+const dateToDayFormatter = require("../date-time/dateToDayFormatter");
 
 async function sendSlackNotification(meeting) {
     // converting timestamp to date and time
