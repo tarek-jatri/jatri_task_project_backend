@@ -14,7 +14,7 @@ const {
     getAttendanceListOfEmployees,
     getAttendanceList,
 } = require("../controller/Admin/Attendance/AdminAttendanceController");
-const {decisionMeeting} = require("../controller/Admin/Meeting/AdminMeetingController");
+const { decisionMeeting } = require("../controller/Admin/Meeting/AdminMeetingController");
 
 const {
     addUserValidators,
@@ -26,17 +26,18 @@ const authAdminTokenMiddleware = require("../middlewares/common/authenticateAdmi
 const validationErrorHandler = require("../middlewares/common/validationErrorHandler");
 const meetingIdValidator = require("../middlewares/meeting/meetingValidators");
 
-
-const {addAttendance, getAttendance} = require("../controller/User/Attendance/UserAttendanceController");
+const {
+    addAttendance,
+    getAttendance,
+} = require("../controller/User/Attendance/UserAttendanceController");
 const authUserTokenMiddleware = require("../middlewares/common/authenticateUserToken");
 const {
     addMeetingRequest,
     getMeetingDetails,
-    updateMeetingDetails
+    updateMeetingDetails,
 } = require("../controller/User/Meeting/UserMeetingController");
 
 const router = express.Router();
-
 
 //=> Admin - User Routes
 // creating user
@@ -95,7 +96,6 @@ router.get(
     getAttendanceList
 );
 
-
 //=> Admin - Meeting Routes
 // adding meeting
 router.post("/meeting", authAdminTokenMiddleware, addMeetingRequest);
@@ -104,9 +104,21 @@ router.post("/meeting", authAdminTokenMiddleware, addMeetingRequest);
 router.get("/meeting", authAdminTokenMiddleware, getMeetingDetails);
 
 // updating meeting
-router.put("/meeting/:id", meetingIdValidator, validationErrorHandler, authAdminTokenMiddleware, updateMeetingDetails);
+router.put(
+    "/meeting/:id",
+    meetingIdValidator,
+    validationErrorHandler,
+    authAdminTokenMiddleware,
+    updateMeetingDetails
+);
 
 // changing meeting status
-router.put("/meeting/status/:id", meetingIdValidator, validationErrorHandler, authAdminTokenMiddleware, decisionMeeting);
+router.put(
+    "/meeting/status/:id",
+    meetingIdValidator,
+    validationErrorHandler,
+    authAdminTokenMiddleware,
+    decisionMeeting
+);
 
 module.exports = router;
