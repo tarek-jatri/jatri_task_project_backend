@@ -7,7 +7,7 @@ const User = require("../../../models/People");
 async function updateUserInfo(req, res, next) {
     try {
         // destructuring the request body inputs
-        const user = { ...req.body };
+        const user = {...req.body};
         // // deleting the object id from request body
         // delete user._id;
         // // deleting the password from request body if given
@@ -20,11 +20,10 @@ async function updateUserInfo(req, res, next) {
             }, user, {
                 new: true
             })
-            .select({ password: 0, __v: 0 });
+            .select({password: 0, __v: 0});
 
         // sending response
         res.status(200).json({
-            updateUser,
             message: "user updated successfully",
         });
     } catch (error) {
