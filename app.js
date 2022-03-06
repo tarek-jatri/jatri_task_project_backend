@@ -24,7 +24,7 @@ dotenv.config();
 mongoose
     .connect(process.env.MONGO_CONNECTION_STRING)
     .then(() => {
-        console.log("JAS database connection successful");
+        console.log("JAS-v2 database connection successful");
     })
     .catch((err) => console.log(err));
 

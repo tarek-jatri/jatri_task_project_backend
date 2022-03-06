@@ -66,10 +66,6 @@ const addUserValidators = [
         .isLength({min: 1})
         .withMessage("Designation cannot be empty")
         .trim(),
-    check("lineManager")
-        .isLength({min: 1})
-        .withMessage("Line Manager cannot be empty")
-        .trim(),
     check("nid")
         .isNumeric()
         .withMessage("NID cannot have characters")

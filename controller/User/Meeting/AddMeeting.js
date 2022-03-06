@@ -3,7 +3,7 @@ const createError = require("http-errors");
 
 // internal imports
 const Meeting = require("../../../models/Meeting");
-const sendSlackNotification = require("../../../common/slack-notification");
+const sendSlackNotification = require("../../../common/slack-notifiaction/slack-notification");
 
 // adding meeting request
 async function addMeetingRequest(req, res, next) {
@@ -17,27 +17,29 @@ async function addMeetingRequest(req, res, next) {
             userId: req.userId,
             fromTime,
             toTime,
+            members: req.body.members,
             comments: req.body.comments,
             status: req.body.status,
         });
 
         await meetingObj.save();
 
-
         res.status(200).json({
-            meetingObj,
             message: "Meeting created successfully",
         });
 
         // sending slack notification
         await sendSlackNotification({
-            username: req.username,
+            userId: req.userId,
+            username: req.userEmail.split("@")[0],
             date: req.body.date,
             fromTime,
             toTime,
+            members: req.body.members,
             comments: req.body.comments,
             status: req.body.status ? req.body.status : "pending",
         });
+
     } catch (error) {
         next(createError(error));
     }
