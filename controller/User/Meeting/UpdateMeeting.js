@@ -33,7 +33,6 @@ async function updateMeetingDetails(req, res, next) {
         if (updatedMeeting) {
             // sending response
             res.status(200).json({
-                updatedMeeting,
                 message: "meeting updated successfully",
             });
         } else {

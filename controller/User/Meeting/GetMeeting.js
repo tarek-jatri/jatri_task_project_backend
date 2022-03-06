@@ -21,13 +21,15 @@ async function getMeetingDetails(req, res, next) {
 
         // getting meetings
         let meetings;
+
         // checking if it's requested by user/admin
         if (req.userRole === "user") {
             meetings = await Meeting
                 .find({
                     userId: req.userId,
                     fromTime: {
-                        $gte: date
+                        $gte: date,
+                        $lte: new Date(`${date.toISOString().split("T")[0]}T23:59:00.000Z`),
                     }
                 })
                 .sort({fromTime: "asc"})
@@ -35,11 +37,13 @@ async function getMeetingDetails(req, res, next) {
                     __v: 0,
                 })
                 .populate("userId", "name");
+
         } else {
             meetings = await Meeting
                 .find({
                     fromTime: {
-                        $gte: date
+                        $gte: date,
+                        $lte: new Date(`${date.toISOString().split("T")[0]}T23:59:00.000Z`),
                     }
                 })
                 .sort({fromTime: "asc"})
@@ -47,8 +51,10 @@ async function getMeetingDetails(req, res, next) {
                     __v: 0,
                 })
                 .populate("userId", "name");
+
         }
 
+        // constructing payload
         const payloads = [];
         for (const meeting of meetings) {
             const from = formatTimestamp(meeting.fromTime);

@@ -34,10 +34,10 @@ async function getAttendanceList(req, res, next) {
         })
             .sort({timeDate: "asc"})
             .select({
+                userId: 0,
                 _id: 0,
                 __v: 0,
-            })
-            .populate("userId", "name");
+            });
 
         // checking if any attendance is available
         if (attendances && attendances.length > 0) {
@@ -46,6 +46,7 @@ async function getAttendanceList(req, res, next) {
             const attendanceStat = await getAttendanceStat(attendances, totalDays);
             res.status(200).json({
                 attendanceStat,
+                name: req.username,
                 attendances,
             });
         } else {
