@@ -1,10 +1,10 @@
 const transporter = require("../../common/email");
-const formatTimestamp = require("../../common/formatTimestamp");
+const formatTimestamp = require("../../common/date-time/formatTimestamp");
 const dateToDayFormatter = require("../../common/date-time/dateToDayFormatter");
 
 async function sendAttendanceMail(req, res, next) {
     // timestamp to date, time and day conversion
-    const { date, strTime } = formatTimestamp(req.attendance.timeDate);
+    const {date, strTime} = formatTimestamp(req.attendance.timeDate);
     const msgDate = dateToDayFormatter(req.attendance.timeDate);
 
     const statusStr =

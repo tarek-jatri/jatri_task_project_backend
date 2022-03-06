@@ -16,6 +16,10 @@ const meetingSchema = mongoose.Schema(
             type: Date,
             required: true,
         },
+        members: {
+            type: [mongoose.Types.ObjectId],
+            ref: "People"
+        },
         comments: {
             type: String,
             required: true,

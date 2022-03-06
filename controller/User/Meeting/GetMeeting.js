@@ -3,7 +3,7 @@ const createError = require("http-errors");
 
 // internal imports
 const Meeting = require("../../../models/Meeting");
-const formatTimestamp = require("../../../common/formatTimestamp")
+const formatTimestamp = require("../../../common/date-time/formatTimestamp");
 
 // adding meeting request
 async function getMeetingDetails(req, res, next) {
@@ -30,11 +30,11 @@ async function getMeetingDetails(req, res, next) {
                         $gte: date
                     }
                 })
-                .sort({ fromTime: "asc" })
+                .sort({fromTime: "asc"})
                 .select({
                     __v: 0,
                 })
-                .populate("userId", "name");
+                .populate("members", "name");
         } else {
             meetings = await Meeting
                 .find({
@@ -42,16 +42,18 @@ async function getMeetingDetails(req, res, next) {
                         $gte: date
                     }
                 })
-                .sort({ fromTime: "asc" })
+                .sort({fromTime: "asc"})
                 .select({
                     __v: 0,
                 })
-                .populate("userId", "name");
+                .populate("userId", "name _id")
+                .populate("members", "name");
         }
 
         // constructing payload
         const payloads = [];
         for (const meeting of meetings) {
+            console.log(meeting);
             const from = formatTimestamp(meeting.fromTime);
             const to = formatTimestamp(meeting.toTime);
             const payload = {
@@ -59,6 +61,7 @@ async function getMeetingDetails(req, res, next) {
                 date: from.date,
                 fromTime: from.strTime,
                 toTime: to.strTime,
+                members: meeting.members,
                 comments: meeting.comments,
                 status: meeting.status,
             }

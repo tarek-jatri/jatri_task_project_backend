@@ -6,6 +6,7 @@ async function addAttendance(req, res, next) {
     try {
         // creating attendance obj
         const timestamp = new Date(req.body.timestamp);
+        console.log(timestamp);
 
         // setting the attendance status
         let status;
