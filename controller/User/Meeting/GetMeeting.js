@@ -34,7 +34,7 @@ async function getMeetingDetails(req, res, next) {
                 .select({
                     __v: 0,
                 })
-                .populate("members", "name");
+                .populate("members", "name  email -_id");
         } else {
             meetings = await Meeting
                 .find({
@@ -46,18 +46,18 @@ async function getMeetingDetails(req, res, next) {
                 .select({
                     __v: 0,
                 })
-                .populate("userId", "name _id")
-                .populate("members", "name");
+                .populate("userId", "name -_id")
+                .populate("members", "name email -_id");
         }
 
         // constructing payload
         const payloads = [];
         for (const meeting of meetings) {
-            console.log(meeting);
             const from = formatTimestamp(meeting.fromTime);
             const to = formatTimestamp(meeting.toTime);
             const payload = {
                 meetingId: meeting._id,
+                name: meeting.userId.name,
                 date: from.date,
                 fromTime: from.strTime,
                 toTime: to.strTime,
