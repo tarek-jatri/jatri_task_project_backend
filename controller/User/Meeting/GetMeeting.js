@@ -47,7 +47,7 @@ async function getMeetingDetails(req, res, next) {
                     __v: 0,
                 })
                 .populate("userId", "name -_id")
-                .populate("members", "name email -_id");
+                .populate("members", "name -_id");
         }
 
         // constructing payload
