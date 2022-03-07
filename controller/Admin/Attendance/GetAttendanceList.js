@@ -39,18 +39,18 @@ async function getAttendanceList(req, res, next) {
             })
             .populate("userId", "name");
 
+        console.log(attendances, from, to);
         // checking if any attendance is available
         if (attendances && attendances.length > 0) {
             // getting the stat of attendance list
-            const totalDays = Math.ceil(Math.abs(to - from) / (1000 * 60 * 60 * 24));
-            const attendanceStat = await getAttendanceStat(attendances, totalDays);
+            const attendanceStat = await getAttendanceStat(attendances, from, to);
             res.status(200).json({
                 attendanceStat,
                 attendances,
             });
         } else {
             res.status(200).json({
-                message: "No attendance on today!!!",
+                message: "No attendance found!!!",
             });
         }
     } catch (error) {

@@ -3,6 +3,8 @@ const createError = require("http-errors");
 // internal imports
 const Attendance = require("../../../models/Attendance");
 const User = require("../../../models/People");
+const countWeekdaysWeekends = require("../../../common/date-time/countWeekdaysWeekends");
+
 
 async function getAttendanceStatOfAll(attendances) {
     // using object
@@ -30,7 +32,10 @@ async function getAttendanceStatOfAll(attendances) {
 }
 
 
-async function getAttendanceStat(attendances, totalDays) {
+async function getAttendanceStat(attendances, from, to) {
+    // getting weekdays and weekends
+    const {weekdays, weekends} = countWeekdaysWeekends(from, to);
+
     // using object
     let present = 0, late = 0, absent = 0;
     for (const attendance of attendances) {
@@ -41,10 +46,10 @@ async function getAttendanceStat(attendances, totalDays) {
         }
     }
 
-    absent = totalDays - present - late;
+    absent = weekdays - present - late;
 
     return {
-        totalDays,
+        weekdays,
         present,
         late,
         absent,
