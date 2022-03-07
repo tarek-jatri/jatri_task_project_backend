@@ -22,7 +22,6 @@ async function createUser(req, res, next) {
         await newUser.save();
 
         res.status(200).json({
-            newUser,
             message: "user saved successfully",
         });
     } catch (error) {
