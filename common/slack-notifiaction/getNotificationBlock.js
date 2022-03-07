@@ -41,36 +41,36 @@ async function getNotificationsBlock(meeting) {
             memberEmails.push(email[0].email);
         }
 
-        console.log(memberEmails);
         // creating the header texts
         const headerText = lineManagerMail !== ""
-            ? `*<@${lineManagerMail}>*, You have a new *meeting* request:\n`
-            : "You have a new *meeting* request:\n";
+            ? `<@${lineManagerMail}>, You have a new meeting request:\n`
+            : "You have a new meeting request:\n";
 
         // creating the body text
         let bodyText = "";
-        bodyText += `*Type:*\nRequest For Meeting Schedule\n`;
-        bodyText += `*Requested By:*\n<@${meeting.username}>\n`;
-        bodyText += `*When:*\n${meeting.date}\n`;
-        bodyText += `*Meeting Members:*\n`
+        bodyText += `>*Type:*\n>Request For Meeting Schedule\n`;
+        bodyText += `>*Requested By:*\n>_<@${meeting.username}>_\n`;
+        bodyText += `>*When:*\n>${meeting.date}\n`;
+        bodyText += `>*Time:*\n>${from.strTime} - ${to.strTime}\n`;
+        bodyText += `>*Meeting Members:*\n>`
         if (memberEmails && memberEmails.length > 0) {
             for (const mail of memberEmails)
-                bodyText += ` <@${mail.split("@")[0]}>`;
+                bodyText += ` _<@${mail.split("@")[0]}>_`;
         } else {
-            bodyText += `   *No one was selected*`;
+            bodyText += `>   *No one was selected*`;
         }
-        bodyText += `\n*Time:*\n${from.strTime} - ${to.strTime}\n`;
-        bodyText += `*Comments:*\n"${meeting.comments}"\n*Status:*\n${meeting.status}`;
+        bodyText += `\n>*Comments:*\n>"${meeting.comments}"\n>*Status:*\n>\`${meeting.status.toUpperCase()}\``;
 
 
         const block = {
             blocks: [
                 {
-                    type: "section",
-                    text: {
-                        type: "mrkdwn",
-                        text: headerText,
-                    },
+                    "type": "header",
+                    "text": {
+                        "type": "plain_text",
+                        "text": headerText,
+                        "emoji": true
+                    }
                 },
                 {
                     type: "section",
