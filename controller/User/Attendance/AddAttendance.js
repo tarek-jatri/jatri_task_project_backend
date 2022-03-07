@@ -9,7 +9,7 @@ async function addAttendance(req, res, next) {
 
         // setting the attendance status
         let status;
-        if (timestamp.getHours() <= 10 || timestamp.getHours() <= 10 && timestamp.getMinutes() <= 15)
+        if (timestamp.getHours() < 10 || timestamp.getHours() >= 10 && timestamp.getMinutes() <= 15)
             status = "present";
         else status = "late";
 
