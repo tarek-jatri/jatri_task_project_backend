@@ -1,6 +1,6 @@
-// external improts
+// external imports
 const createError = require("http-errors");
-// internal improts
+// internal imports
 const User = require("../../../models/People");
 
 

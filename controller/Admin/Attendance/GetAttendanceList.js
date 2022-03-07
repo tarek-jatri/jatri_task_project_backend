@@ -3,6 +3,7 @@ const createError = require("http-errors");
 
 // internal imports
 const Attendance = require("../../../models/Attendance");
+const User = require("../../../models/People");
 const {getAttendanceStat} = require("./AttendanceStatistics");
 
 async function getAttendanceList(req, res, next) {
@@ -39,14 +40,21 @@ async function getAttendanceList(req, res, next) {
                 __v: 0,
             });
 
-        console.log(attendances, from, to);
+        // getting name
+        const user = await User
+            .findOne({_id: req.params.id})
+            .select({
+                name: 1,
+            });
+        
         // checking if any attendance is available
         if (attendances && attendances.length > 0) {
             // getting the stat of attendance list
             const attendanceStat = await getAttendanceStat(attendances, from, to);
             res.status(200).json({
                 attendanceStat,
-                name: req.username,
+                id: user._id,
+                name: user.name,
                 attendances,
             });
         } else {
