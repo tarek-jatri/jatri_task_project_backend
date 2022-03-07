@@ -3,6 +3,7 @@ const createError = require("http-errors");
 
 // internal imports
 const Attendance = require("../../../models/Attendance");
+const {getAttendanceStat} = require("../../Admin/Attendance/AttendanceStatistics");
 
 // retrieving attendance data
 async function getAttendance(req, res, next) {
@@ -20,16 +21,28 @@ async function getAttendance(req, res, next) {
                     $lte: toDate
                 }
             })
-            .sort({ timeDate: "asc" })
+            .sort({timeDate: "asc"})
             .select({
+                userId: 0,
                 _id: 0,
                 __v: 0,
             })
             .populate("userId", "name");
 
-        res.status(200).json({
-            attendances
-        });
+        // checking if any attendance is available
+        if (attendances && attendances.length > 0) {
+            // getting the stat of attendance list
+            const attendanceStat = await getAttendanceStat(attendances, fromDate, toDate);
+            res.status(200).json({
+                attendanceStat,
+                attendances,
+            });
+        } else {
+            res.status(200).json({
+                message: "No attendance found!!!",
+            });
+        }
+
     } catch (error) {
         next(createError(error));
     }
