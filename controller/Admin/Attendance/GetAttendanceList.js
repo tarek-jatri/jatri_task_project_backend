@@ -45,7 +45,6 @@ async function getAttendanceList(req, res, next) {
             .findOne({_id: req.params.id})
             .select({
                 name: 1,
-                _id: 0,
             });
 
         // checking if any attendance is available
@@ -55,6 +54,7 @@ async function getAttendanceList(req, res, next) {
             const attendanceStat = await getAttendanceStat(attendances, totalDays);
             res.status(200).json({
                 attendanceStat,
+                id: user._id,
                 name: user.name,
                 attendances,
             });
