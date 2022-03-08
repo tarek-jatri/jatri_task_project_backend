@@ -35,7 +35,7 @@ async function addMeetingRequest(req, res, next) {
             date: req.body.date,
             fromTime,
             toTime,
-            members: req.body.members,
+            members: req.body.members ? req.body.members : [],
             comments: req.body.comments,
             status: req.body.status ? req.body.status : "pending",
         }, "add");

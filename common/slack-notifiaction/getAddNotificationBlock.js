@@ -8,7 +8,6 @@ const dateToDayFormatter = require("../date-time/dateToDayFormatter");
 
 
 async function getAddNotificationsBlock(meeting) {
-
     // converting timestamp to date and time
     const from = formatTimestamp(meeting.fromTime);
     const to = formatTimestamp(meeting.toTime);
@@ -25,10 +24,10 @@ async function getAddNotificationsBlock(meeting) {
                 _id: 0,
             })
             .populate("lineManager", "email -_id");
-
         let lineManagerMail = "";
         if (lineManager && lineManager.length > 0)
             lineManagerMail = lineManager[0].lineManager.email.split("@")[0];
+
 
         // getting the members email
         const memberEmails = [];
@@ -40,11 +39,11 @@ async function getAddNotificationsBlock(meeting) {
                 });
             memberEmails.push(email[0].email);
         }
-
         // creating the header texts
         const headerText = lineManagerMail !== ""
             ? `<@${lineManagerMail}>, You have a new meeting request:\n`
             : "You have a new meeting request:\n";
+
 
         // creating the body text
         let bodyText = "";
@@ -57,7 +56,7 @@ async function getAddNotificationsBlock(meeting) {
             for (const mail of memberEmails)
                 bodyText += ` _<@${mail.split("@")[0]}>_`;
         } else {
-            bodyText += `>   *No one was selected*`;
+            bodyText += `   *No one was selected*`;
         }
         bodyText += `\n>*Comments:*\n>"${meeting.comments}"\n>*Status:*\n>\`${meeting.status.toUpperCase()}\``;
 

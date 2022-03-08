@@ -30,11 +30,6 @@ async function updateMeetingDetails(req, res, next) {
             })
             .select({__v: 0});
 
-        // sending slack notification
-        await sendSlackNotification({
-            updatedMeeting,
-            adminName: req.userEmail.split("@")[0],
-        }, "update");
 
         // checking for already accepted or rejected meeting
         if (updatedMeeting) {
@@ -46,6 +41,11 @@ async function updateMeetingDetails(req, res, next) {
             throw createError("Meeting has already been accepted or rejected");
         }
 
+        // sending slack notification
+        await sendSlackNotification({
+            updatedMeeting,
+            adminName: req.userEmail.split("@")[0],
+        }, "update");
 
     } catch (error) {
         next(createError(error));
