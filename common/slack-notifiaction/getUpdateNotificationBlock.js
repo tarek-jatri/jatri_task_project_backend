@@ -8,8 +8,6 @@ const dateToDayFormatter = require("../date-time/dateToDayFormatter");
 
 
 async function getUpdateNotificationsBlock(meeting) {
-    console.log(meeting.adminName)
-
     // converting timestamp to date and time
     const from = formatTimestamp(meeting.updatedMeeting.fromTime);
     const to = formatTimestamp(meeting.updatedMeeting.toTime);

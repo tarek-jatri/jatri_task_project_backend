@@ -5,7 +5,6 @@ const getAddNotificationsBlock = require("./getAddNotificationBlock");
 const getUpdateNotificationsBlock = require("./getUpdateNotificationBlock");
 
 async function sendSlackNotification(meeting, state) {
-    console.log(state)
     const blocks = state === "add"
         ? await getAddNotificationsBlock(meeting)
         : await getUpdateNotificationsBlock(meeting);
