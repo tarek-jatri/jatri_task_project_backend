@@ -3,6 +3,7 @@ const createError = require("http-errors");
 
 // internal imports
 const Meeting = require("../../../models/Meeting");
+const sendSlackNotification = require("../../../common/slack-notifiaction/slack-notification");
 
 // adding meeting request
 async function updateMeetingDetails(req, res, next) {
@@ -29,6 +30,12 @@ async function updateMeetingDetails(req, res, next) {
             })
             .select({__v: 0});
 
+        // sending slack notification
+        await sendSlackNotification({
+            updatedMeeting,
+            adminName: req.userEmail.split("@")[0],
+        }, "update");
+
         // checking for already accepted or rejected meeting
         if (updatedMeeting) {
             // sending response
@@ -38,6 +45,7 @@ async function updateMeetingDetails(req, res, next) {
         } else {
             throw createError("Meeting has already been accepted or rejected");
         }
+
 
     } catch (error) {
         next(createError(error));

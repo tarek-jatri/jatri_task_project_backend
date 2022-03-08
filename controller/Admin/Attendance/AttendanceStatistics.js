@@ -22,12 +22,16 @@ async function getAttendanceStatOfAll(attendances) {
         next(error);
     }
     absent = totalEmployee - present - late;
+    present += late;
+
+    const presentPercentage = (present * 100 / totalEmployee).toFixed(2) + "%";
 
     return {
         totalEmployee,
         present,
         late,
         absent,
+        presentPercentage
     }
 }
 
@@ -47,12 +51,16 @@ async function getAttendanceStat(attendances, from, to) {
     }
 
     absent = weekdays - present - late;
+    present += late;
+    const presentPercentage = (present * 100 / weekdays).toFixed(2) + "%";
+
 
     return {
         weekdays,
         present,
         late,
         absent,
+        presentPercentage
     }
 }
 

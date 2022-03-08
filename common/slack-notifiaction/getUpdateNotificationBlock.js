@@ -7,32 +7,35 @@ const formatTimestamp = require("../date-time/formatTimestamp");
 const dateToDayFormatter = require("../date-time/dateToDayFormatter");
 
 
-async function getNotificationsBlock(meeting) {
+async function getUpdateNotificationsBlock(meeting) {
+    console.log(meeting.adminName)
 
     // converting timestamp to date and time
-    const from = formatTimestamp(meeting.fromTime);
-    const to = formatTimestamp(meeting.toTime);
+    const from = formatTimestamp(meeting.updatedMeeting.fromTime);
+    const to = formatTimestamp(meeting.updatedMeeting.toTime);
 
     // converting timestamp to day and date
-    meeting.date = dateToDayFormatter(meeting.date);
+    meeting.date = dateToDayFormatter(meeting.updatedMeeting.fromTime);
 
     try {
         // getting the line manager mail
-        const lineManager = await User
-            .find({_id: meeting.userId})
+        const user = await User
+            .find({_id: meeting.updatedMeeting.userId})
             .select({
+                email: 1,
                 lineManager: 1,
                 _id: 0,
             })
             .populate("lineManager", "email -_id");
 
         let lineManagerMail = "";
-        if (lineManager && lineManager.length > 0)
-            lineManagerMail = lineManager[0].lineManager.email.split("@")[0];
-
+        if (user && user.length > 0) {
+            lineManagerMail = user[0].lineManager.email.split("@")[0];
+            user.username = user[0].email.split("@")[0];
+        }
         // getting the members email
         const memberEmails = [];
-        for (const member of meeting.members) {
+        for (const member of meeting.updatedMeeting.members) {
             const email = await User.find({_id: member})
                 .select({
                     email: 1,
@@ -43,13 +46,13 @@ async function getNotificationsBlock(meeting) {
 
         // creating the header texts
         const headerText = lineManagerMail !== ""
-            ? `<@${lineManagerMail}>, You have a new meeting request:\n`
-            : "You have a new meeting request:\n";
+            ? `MEETING REQUEST UPDATED BY: <@${meeting.adminName}>\n\n<@${lineManagerMail}>, You have a new meeting request:\n`
+            : `MEETING REQUEST UPDATED BY: <@${meeting.adminName}>\n\n You have a new meeting request:\n`;
 
         // creating the body text
         let bodyText = "";
         bodyText += `>*Type:*\n>Request For Meeting Schedule\n`;
-        bodyText += `>*Requested By:*\n>_<@${meeting.username}>_\n`;
+        bodyText += `>*Requested By:*\n>_<@${user.username}>_\n`;
         bodyText += `>*When:*\n>${meeting.date}\n`;
         bodyText += `>*Time:*\n>${from.strTime} - ${to.strTime}\n`;
         bodyText += `>*Meeting Members:*\n>`
@@ -59,7 +62,7 @@ async function getNotificationsBlock(meeting) {
         } else {
             bodyText += `>   *No one was selected*`;
         }
-        bodyText += `\n>*Comments:*\n>"${meeting.comments}"\n>*Status:*\n>\`${meeting.status.toUpperCase()}\``;
+        bodyText += `\n>*Comments:*\n>"${meeting.updatedMeeting.comments}"\n>*Status:*\n>\`${meeting.updatedMeeting.status.toUpperCase()}\``;
 
 
         const block = {
@@ -95,4 +98,4 @@ async function getNotificationsBlock(meeting) {
 
 }
 
-module.exports = getNotificationsBlock;
+module.exports = getUpdateNotificationsBlock;
