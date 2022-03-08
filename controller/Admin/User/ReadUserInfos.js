@@ -30,7 +30,9 @@ async function readUserInfos(req, res, next) {
                 })
                 .populate("lineManager", "name -_id");
         }
-
+        // this is used to remove the super admin
+        users.shift();
+        
         // checking if user is found or not
         if (users && users.length > 0) {
             res.status(200).json({
