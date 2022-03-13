@@ -11,10 +11,16 @@ async function getAttendancetime() {
             break;
         }
     }
-
-    return {
-        hour: parseInt(attendanceSettings.time.split(":")[0]),
-        minutes: parseInt(attendanceSettings.time.split(":")[1]),
+    if (attendanceSettings && attendanceSettings.length > 0) {
+        return {
+            hour: parseInt(attendanceSettings.time.split(":")[0]),
+            minutes: parseInt(attendanceSettings.time.split(":")[1]),
+        }
+    } else {
+        return {
+            hour: 10,
+            minutes: 15,
+        }
     }
 }
 
