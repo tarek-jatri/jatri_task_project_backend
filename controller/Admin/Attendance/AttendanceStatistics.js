@@ -1,7 +1,4 @@
-// external imports
-const createError = require("http-errors");
 // internal imports
-const Attendance = require("../../../models/Attendance");
 const User = require("../../../models/People");
 const countWeekdaysWeekends = require("../../../common/date-time/countWeekdaysWeekends");
 
@@ -19,7 +16,7 @@ async function getAttendanceStatOfAll(attendances) {
     try {
         totalEmployee = await User.estimatedDocumentCount();
     } catch (error) {
-        next(error);
+        totalEmployee = 0;
     }
     absent = totalEmployee - present - late;
     present += late;

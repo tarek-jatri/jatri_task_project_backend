@@ -1,6 +1,7 @@
 // giving attendance
 const Attendance = require("../../../models/Attendance");
 const createError = require("http-errors");
+const {getAttendancetime} = require("../../../common/settings/settings");
 
 async function addAttendance(req, res, next) {
     try {
@@ -9,10 +10,12 @@ async function addAttendance(req, res, next) {
 
         // setting the attendance status
         let status;
-        if (timestamp.getHours() < 10 || timestamp.getHours() >= 10 && timestamp.getMinutes() <= 15)
+        const {hour, minutes} = await getAttendancetime();
+        if (timestamp.getHours() < hour || timestamp.getHours() >= hour && timestamp.getMinutes() <= minutes)
             status = "present";
         else status = "late";
 
+        
         // check if entry on that day already exists or not
         const date = timestamp.toISOString().split("T")[0];
         const isValidDate = await Attendance.findOne({

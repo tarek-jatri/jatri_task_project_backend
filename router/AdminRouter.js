@@ -14,7 +14,7 @@ const {
     getAttendanceListOfEmployees,
     getAttendanceList,
 } = require("../controller/Admin/Attendance/AdminAttendanceController");
-const { decisionMeeting } = require("../controller/Admin/Meeting/AdminMeetingController");
+const {decisionMeeting} = require("../controller/Admin/Meeting/AdminMeetingController");
 
 const {
     addUserValidators,
@@ -30,12 +30,16 @@ const {
     addAttendance,
     getAttendance,
 } = require("../controller/User/Attendance/UserAttendanceController");
-const authUserTokenMiddleware = require("../middlewares/common/authenticateUserToken");
 const {
     addMeetingRequest,
     getMeetingDetails,
     updateMeetingDetails,
 } = require("../controller/User/Meeting/UserMeetingController");
+const {
+    attendanceSettings,
+} = require("../controller/Admin/Settings/AdminSettingsController");
+const sendAttendanceMail = require("../middlewares/common/sendAttendanceMail");
+
 
 const router = express.Router();
 
@@ -75,7 +79,7 @@ router.delete(
 
 //=> Admin - Attendance Routes
 // adding attendance
-router.post("/attendance", authAdminTokenMiddleware, addAttendance);
+router.post("/attendance", authAdminTokenMiddleware, addAttendance, sendAttendanceMail);
 
 // getting attendance
 router.get("/attendance", authAdminTokenMiddleware, getAttendance);
@@ -120,5 +124,11 @@ router.put(
     authAdminTokenMiddleware,
     decisionMeeting
 );
+
+
+//=> Admin - Setting
+// setting attendance time
+router.post("/attendancetime", authAdminTokenMiddleware, attendanceSettings);
+
 
 module.exports = router;
