@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
+
+
 //=> Internal Imports
 const {
     notFoundHandler,
@@ -16,6 +18,9 @@ const userRouter = require("./router/UserRouter");
 const onlineUserId = [];
 //=> setting
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
+
 dotenv.config();
 //=> Database Connection
 mongoose
@@ -39,16 +44,14 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
     next();
 });
-const http = require('http');
-const server = http.createServer(app);
 const {Server} = require("socket.io");
-const {on} = require("events");
 const io = new Server(server, {
     cors: {
         origin: process.env.FRONTEND_URL,
         credentials: true
     }
 });
+
 //=> Parse Cookies
 app.use(cookieParser(process.env.COOKIE_SECRET));
 //=> Routing Setup
