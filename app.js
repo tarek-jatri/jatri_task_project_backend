@@ -16,10 +16,6 @@ const userRouter = require("./router/UserRouter");
 
 //=> setting
 const app = express();
-const http = require('http');
-const server = http.createServer(app);
-const {Server} = require("socket.io");
-const io = new Server(server);
 dotenv.config();
 
 
@@ -46,6 +42,18 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
     next();
+});
+
+//=> settings for socket connection and handling cors
+const http = require('http');
+const server = http.createServer(app);
+const {Server} = require("socket.io");
+const io = new Server(server, {
+    cors: {
+        origin: process.env.FRONTEND_URL,
+        allowedHeaders: ["my-custom-header"],
+        credentials: true
+    }
 });
 
 //=> Parse Cookies
