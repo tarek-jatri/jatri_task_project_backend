@@ -4,7 +4,6 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const jwt = require("jsonwebtoken");
 
 
 //=> Internal Imports
@@ -15,7 +14,8 @@ const {
 const loginRouter = require("./router/LoginRouter");
 const adminRouter = require("./router/AdminRouter");
 const userRouter = require("./router/UserRouter");
-const onlineUserId = [];
+const socketImplementation = require("./common/socket-implementation.js");
+
 //=> setting
 const app = express();
 const http = require('http');
@@ -44,13 +44,7 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
     next();
 });
-const {Server} = require("socket.io");
-const io = new Server(server, {
-    cors: {
-        origin: process.env.FRONTEND_URL,
-        credentials: true
-    }
-});
+
 
 //=> Parse Cookies
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -63,34 +57,9 @@ app.use("/user", userRouter);
 app.use(notFoundHandler);
 // common default error handler
 app.use(errorHandler);
-//=>
-io.on('connection', (socket) => {
-    console.log('a user connected');
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-    });
-});
-io.on("connection", (socket) => {
-    socket.on('login', (token) => {
-        if (token && token.length > 0) {
-            const decodePayload = jwt.verify(token, process.env.JWT_SECRET);
-            console.log("Login: ", decodePayload.name);
-            onlineUserId.push(decodePayload._id);
-            io.emit("online", onlineUserId);
-        }
-    });
-    socket.on('logout', (token) => {
-        if (token && token.length > 0) {
-            const decodePayload = jwt.verify(token, process.env.JWT_SECRET);
-            console.log("Logout: ", decodePayload.name);
-            const index = onlineUserId.indexOf(decodePayload._id);
-            if (index > -1) {
-                onlineUserId.splice(index, 1); // 2nd parameter means remove one item only
-            }
-            io.emit("online", onlineUserId);
-        }
-    });
-});
+//=> Implementing Socket
+socketImplementation(server);
+
 //=> Server Start
 server.listen(process.env.PORT, () => {
     console.log(`JAS app listening to port ${process.env.PORT}`);
