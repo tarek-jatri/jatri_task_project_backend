@@ -39,7 +39,7 @@ async function getAttendanceListOfEmployees(req, res, next) {
         // checking if any attendance is given today
         if (todayAttendances && todayAttendances.length > 0) {
             // getting the stat of today's attendance list
-            const attendanceStat = await getAttendanceStatOfAll(todayAttendances);
+            const attendanceStat = await getAttendanceStatOfAll(todayAttendances, from, to);
             res.status(200).json({
                 attendanceStat,
                 todayAttendances,

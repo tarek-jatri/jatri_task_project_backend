@@ -10,9 +10,11 @@ const User = require("../../models/People");
 async function login(req, res, next) {
     try {
         //    find the user with mobile / email+
-        const user = await User.findOne({
-            $or: [{email: req.body.username}, {mobile: req.body.username}]
-        });
+        const user = await User
+            .findOne({
+                $or: [{email: req.body.username}, {mobile: req.body.username}]
+            })
+            .populate("lineManager", "name -_id");
 
         if (user && user._id) {
             // checking valid password
@@ -24,6 +26,8 @@ async function login(req, res, next) {
                     jatriId: user.jatriId,
                     name: user.name,
                     email: user.email,
+                    designation: user.designation,
+                    lineManager: user.lineManager !== null ? user.lineManager.name : "None",
                     role: user.role,
                 }
 
