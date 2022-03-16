@@ -22,6 +22,7 @@ const http = require('http');
 const server = http.createServer(app);
 
 dotenv.config();
+
 //=> Database Connection
 mongoose
     .connect(process.env.MONGO_CONNECTION_STRING)
@@ -48,16 +49,19 @@ app.use(function (req, res, next) {
 
 //=> Parse Cookies
 app.use(cookieParser(process.env.COOKIE_SECRET));
+
 //=> Routing Setup
 app.use("/admin", adminRouter);
 app.use("/login", loginRouter);
 app.use("/user", userRouter);
+
 //=> Error Handling
 // 404 Not found handler
 app.use(notFoundHandler);
 // common default error handler
 app.use(errorHandler);
-//=> Implementing Socket
+
+//=> Implementing Socket Server
 socketImplementation(server);
 
 //=> Server Start
