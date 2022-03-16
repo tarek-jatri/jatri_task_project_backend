@@ -2,12 +2,13 @@
 const express = require("express");
 
 //=> internal imports
-const { addAttendance, getAttendance } = require("../controller/User/Attendance/UserAttendanceController");
+const {addAttendance, getAttendance} = require("../controller/User/Attendance/UserAttendanceController");
 const {
     addMeetingRequest,
     getMeetingDetails,
     updateMeetingDetails
 } = require("../controller/User/Meeting/UserMeetingController");
+const userDashboard = require("../controller/User/UserDashboard");
 const authUserTokenMiddleware = require("../middlewares/common/authenticateUserToken");
 const sendAttendanceMail = require("../middlewares/common/sendAttendanceMail");
 const meetingIdValidator = require("../middlewares/meeting/meetingValidators");
@@ -17,6 +18,9 @@ const router = express.Router();
 
 
 //=> setting up the route
+
+//=> User Dashboard
+router.get("/dashboard", authUserTokenMiddleware, userDashboard);
 
 //=> User Attendance
 // adding attendance

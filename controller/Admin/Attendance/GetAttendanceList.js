@@ -4,7 +4,7 @@ const createError = require("http-errors");
 // internal imports
 const Attendance = require("../../../models/Attendance");
 const User = require("../../../models/People");
-const {getAttendanceStat} = require("./AttendanceStatistics");
+const {getAttendanceStat} = require("../../../common/get-statistics/getStatistics");
 
 async function getAttendanceList(req, res, next) {
     try {
@@ -26,13 +26,14 @@ async function getAttendanceList(req, res, next) {
             );
         }
         // now retrieving data from database
-        const attendances = await Attendance.find({
-            userId: req.params.id,
-            timeDate: {
-                $gte: from,
-                $lte: to,
-            },
-        })
+        const attendances = await Attendance
+            .find({
+                userId: req.params.id,
+                timeDate: {
+                    $gte: from,
+                    $lte: to,
+                },
+            })
             .sort({timeDate: "asc"})
             .select({
                 userId: 0,
@@ -46,11 +47,11 @@ async function getAttendanceList(req, res, next) {
             .select({
                 name: 1,
             });
-        
+
         // checking if any attendance is available
         if (attendances && attendances.length > 0) {
             // getting the stat of attendance list
-            const attendanceStat = await getAttendanceStat(attendances, from, to);
+            const attendanceStat = await getAttendanceStat(req.params.id, from, to);
             res.status(200).json({
                 attendanceStat,
                 id: user._id,
