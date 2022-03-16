@@ -4,7 +4,7 @@ const countWeekdaysWeekends = require("../date-time/countWeekdaysWeekends");
 
 
 async function getAttendanceStat(userId, from, to) {
-    // counting the present and absent state for the user
+    // fetching the present and absent state for the user
     const attendanceStat = await Attendance.aggregate([
         {
             $match: {
@@ -35,12 +35,11 @@ async function getAttendanceStat(userId, from, to) {
             }
         }
     ]);
-    
+
     // assigning the present and late count
     let status = {};
 
     for (const attendance of attendanceStat) {
-        console.log(attendance.status, attendance.count);
         status[attendance.status] = attendance.count;
     }
 

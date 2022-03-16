@@ -4,7 +4,6 @@ const Attendance = require("../../models/Attendance");
 
 
 async function getAttendanceStatOfAll(from, to) {
-    console.log(from, to)
     // using object
     let totalEmployee = 0;
     try {
@@ -13,7 +12,7 @@ async function getAttendanceStatOfAll(from, to) {
         totalEmployee = 0;
     }
 
-    // counting the present and absent state
+    // fetching the present and absent state
     const attendanceStat = await Attendance.aggregate([
         {
             $match: {
@@ -40,12 +39,14 @@ async function getAttendanceStatOfAll(from, to) {
     ]);
 
     // assigning the present and late count
-    let present = attendanceStat[0].status === "present"
-        ? attendanceStat[0].count
-        : attendanceStat[1].count;
-    const late = attendanceStat[0].status === "late"
-        ? attendanceStat[0].count
-        : attendanceStat[1].count;
+    let status = {};
+
+    for (const attendance of attendanceStat) {
+        status[attendance.status] = attendance.count;
+    }
+
+    let present = status["present"] ? status["present"] : 0;
+    const late = status["late"] ? status["late"] : 0;
 
     const absent = totalEmployee - present - late;
     present += late;
