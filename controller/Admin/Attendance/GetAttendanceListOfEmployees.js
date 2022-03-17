@@ -3,7 +3,7 @@ const createError = require("http-errors");
 
 // internal imports
 const Attendance = require("../../../models/Attendance");
-const {getAttendanceStatOfAll} = require("./AttendanceStatistics");
+const {getAttendanceStatOfAll} = require("../../../common/get-statistics/getStatistics");
 
 
 async function getAttendanceListOfEmployees(req, res, next) {
@@ -39,7 +39,7 @@ async function getAttendanceListOfEmployees(req, res, next) {
         // checking if any attendance is given today
         if (todayAttendances && todayAttendances.length > 0) {
             // getting the stat of today's attendance list
-            const attendanceStat = await getAttendanceStatOfAll(todayAttendances);
+            const attendanceStat = await getAttendanceStatOfAll(from, to);
             res.status(200).json({
                 attendanceStat,
                 todayAttendances,

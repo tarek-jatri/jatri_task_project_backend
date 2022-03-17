@@ -12,13 +12,10 @@ module.exports = function socketImplementation(server) {
             credentials: true
         }
     });
-    io.on('connection', (socket) => {
-        console.log('a user connected');
-        socket.on('disconnect', () => {
-            console.log('user disconnected');
-        });
-    });
+
+    //=> calling the socket events
     io.on("connection", (socket) => {
+        // login event
         socket.on('login', (token) => {
             if (token && token.length > 0) {
                 const decodePayload = jwt.verify(token, process.env.JWT_SECRET);
@@ -27,6 +24,8 @@ module.exports = function socketImplementation(server) {
                 io.emit("online", onlineUserId);
             }
         });
+
+        // logout event
         socket.on('logout', (token) => {
             if (token && token.length > 0) {
                 const decodePayload = jwt.verify(token, process.env.JWT_SECRET);
