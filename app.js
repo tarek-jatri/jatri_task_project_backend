@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
-
 //=> Internal Imports
 const {
     notFoundHandler,
@@ -16,12 +15,13 @@ const adminRouter = require("./router/AdminRouter");
 const userRouter = require("./router/UserRouter");
 const socketImplementation = require("./common/socket-implementation.js");
 
+
 //=> setting
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-
 dotenv.config();
+
 //=> Database Connection
 mongoose
     .connect(process.env.MONGO_CONNECTION_STRING)
@@ -29,9 +29,11 @@ mongoose
         console.log("JAS-v2 database connection successful");
     })
     .catch((err) => console.log(err));
+
 //=> Request Parser
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+
 //=> settings for connection and cookie sharing with frontend
 app.use(cors({
     credentials: true,
@@ -48,15 +50,18 @@ app.use(function (req, res, next) {
 
 //=> Parse Cookies
 app.use(cookieParser(process.env.COOKIE_SECRET));
+
 //=> Routing Setup
 app.use("/admin", adminRouter);
 app.use("/login", loginRouter);
 app.use("/user", userRouter);
+
 //=> Error Handling
 // 404 Not found handler
 app.use(notFoundHandler);
 // common default error handler
 app.use(errorHandler);
+
 //=> Implementing Socket
 socketImplementation(server);
 
