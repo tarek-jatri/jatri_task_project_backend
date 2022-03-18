@@ -9,11 +9,11 @@ const cors = require("cors");
 const {
     notFoundHandler,
     errorHandler,
-} = require("./middlewares/common/errorHandler");
-const loginRouter = require("./router/LoginRouter");
-const adminRouter = require("./router/AdminRouter");
-const userRouter = require("./router/UserRouter");
-const socketImplementation = require("./common/socket-implementation.js");
+} = require("./Middlewares/common/errorHandler");
+const loginRouter = require("./Router/LoginRouter");
+const adminRouter = require("./Router/AdminRouter");
+const userRouter = require("./Router/UserRouter");
+const socketImplementation = require("./Common/socket-implementation.js");
 
 
 //=> setting
@@ -60,7 +60,7 @@ app.use("/user", userRouter);
 // 404 Not found handler
 app.use(notFoundHandler);
 
-// common default error handler
+// Common default error handler
 app.use(errorHandler);
 
 //=> Implementing Socket
