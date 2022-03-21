@@ -28,17 +28,17 @@ async function addMeetingRequest(req, res, next) {
             message: "Meeting created successfully",
         });
 
-        // sending slack notification
-        await sendSlackNotification({
-            userId: req.userId,
-            username: req.userEmail.split("@")[0],
-            date: req.body.date,
-            fromTime,
-            toTime,
-            members: req.body.members ? req.body.members : [],
-            comments: req.body.comments,
-            status: req.body.status ? req.body.status : "pending",
-        }, "add");
+        // // sending slack notification
+        // await sendSlackNotification({
+        //     userId: req.userId,
+        //     username: req.userEmail.split("@")[0],
+        //     date: req.body.date,
+        //     fromTime,
+        //     toTime,
+        //     members: req.body.members ? req.body.members : [],
+        //     comments: req.body.comments,
+        //     status: req.body.status ? req.body.status : "pending",
+        // }, "add");
 
     } catch (error) {
         next(createError(error));
