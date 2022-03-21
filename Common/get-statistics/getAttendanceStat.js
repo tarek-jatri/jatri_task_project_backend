@@ -3,10 +3,11 @@ const mongoose = require("mongoose");
 const countWeekdaysWeekends = require("../date-time/countWeekdaysWeekends");
 
 
-async function getAttendanceStat(userId, {from, to}) {
+async function getAttendanceStat(userId, fromDate, toDate) {
+
     // converting string to date object
-    from = new Date(from);
-    to = new Date(to);
+    const from = new Date(fromDate);
+    const to = new Date(toDate);
     // fetching the present and absent state for the user
     const attendanceStat = await Attendance.aggregate([
         {
@@ -38,7 +39,7 @@ async function getAttendanceStat(userId, {from, to}) {
             }
         }
     ]);
-
+    
     // assigning the present and late count
     let status = {};
 
@@ -52,7 +53,6 @@ async function getAttendanceStat(userId, {from, to}) {
     // const from = fromTime, to = toTime;
     // getting weekdays and weekends
     const {weekdays, weekends} = countWeekdaysWeekends(from, to);
-
     const absent = weekdays - present - late;
     present += late;
     const presentPercentage = (present * 100 / weekdays).toFixed(2) + "%";

@@ -32,7 +32,7 @@ async function getAttendance(req, res, next) {
         // checking if any attendance is available
         if (attendances && attendances.length > 0) {
             // getting the stat of attendance list
-            const attendanceStat = await getAttendanceStat(attendances, fromDate, toDate);
+            const attendanceStat = await getAttendanceStat(req.userId, fromDate, toDate);
             res.status(200).json({
                 attendanceStat,
                 attendances,

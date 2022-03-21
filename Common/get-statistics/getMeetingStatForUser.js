@@ -5,8 +5,11 @@ const mongoose = require("mongoose");
 const Meeting = require("../../Models/Meeting");
 
 
-async function getMeetingStatForUser(userId, from, to) {
-    console.log(userId, from, to)
+async function getMeetingStatForUser(userId, fromDate, toDate) {
+
+    // converting string to date object
+    const from = new Date(fromDate);
+    const to = new Date(toDate);
 
     // fetching the meeting details
     const meetingStat = await Meeting.aggregate([
@@ -36,6 +39,20 @@ async function getMeetingStatForUser(userId, from, to) {
                     status: "$status"
                 },
                 count: {$sum: 1},
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                date: "$_id.date",
+                status: "$_id.status",
+                count: "$count"
+            }
+        },
+        {
+            $sort: {
+                "date": 1,
+                "count": 1,
             }
         }
     ]);

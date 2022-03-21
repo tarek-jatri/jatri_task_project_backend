@@ -12,11 +12,9 @@ async function userDashboard(req, res, next) {
     // getting starting of this month's as from date
     const from = new Date(to.getFullYear(), to.getMonth(), 1);
 
-    const timeObj = {from, to};
-
     try {
         // getting attendance stat
-        const attendanceStat = await getAttendanceStat(req.userId, JSON.parse(JSON.stringify(timeObj)));
+        const attendanceStat = await getAttendanceStat(req.userId, from, to);
 
         // getting meeting stat
         const meetingStat = await getMeetingStatForUser(req.userId, from, to);
