@@ -8,13 +8,13 @@ const {
     updateUserInfo,
     deleteUser,
     usersList,
-} = require("../Controller/Admin/User/AdminCreateUserController");
+} = require("../Controller/Admin/User");
 
 const {
     getAttendanceListOfEmployees,
     getAttendanceList,
-} = require("../Controller/Admin/Attendance/AdminAttendanceController");
-const {decisionMeeting} = require("../Controller/Admin/Meeting/AdminMeetingController");
+} = require("../Controller/Admin/Attendance");
+const {decisionMeeting} = require("../Controller/Admin/Meeting");
 
 const {
     addUserValidators,
@@ -29,15 +29,15 @@ const meetingIdValidator = require("../Middlewares/meeting/meetingValidators");
 const {
     addAttendance,
     getAttendance,
-} = require("../Controller/User/Attendance/UserAttendanceController");
+} = require("../Controller/User/Attendance");
 const {
     addMeetingRequest,
     getMeetingDetails,
     updateMeetingDetails,
-} = require("../Controller/User/Meeting/UserMeetingController");
+} = require("../Controller/User/Meeting");
 const {
     attendanceSettings,
-} = require("../Controller/Admin/Settings/AdminSettingsController");
+} = require("../Controller/Admin/Settings");
 const sendAttendanceMail = require("../Middlewares/common/sendAttendanceMail");
 
 

@@ -3,7 +3,7 @@ const createError = require("http-errors");
 
 // internal imports
 const Attendance = require("../../../Models/Attendance");
-const {getAttendanceStatOfAll} = require("../../../Common/get-statistics/getStatistics");
+const {getAttendanceStatOfAll} = require("../../../Common/get-statistics");
 
 
 async function getAttendanceListOfEmployees(req, res, next) {

@@ -4,7 +4,7 @@ const express = require("express");
 //=> internal imports
 const doLoginValidators = require("../Middlewares/login/loginValidator");
 const validationErrorHandler = require("../Middlewares/common/validationErrorHandler");
-const {login} = require("../Controller/Login/LoginController");
+const {login} = require("../Controller/Login");
 const router = express.Router();
 
 

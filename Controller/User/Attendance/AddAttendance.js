@@ -1,7 +1,7 @@
 // giving attendance
 const Attendance = require("../../../Models/Attendance");
 const createError = require("http-errors");
-const {getAttendancetime} = require("../../../Common/settings/settings");
+const {getAttendancetime} = require("../../../Common/settings");
 
 async function addAttendance(req, res, next) {
     try {

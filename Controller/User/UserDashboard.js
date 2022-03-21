@@ -2,7 +2,7 @@
 const createError = require("http-errors");
 
 // internal imports
-const {getAttendanceStat, getMeetingStatForUser} = require("../../Common/get-statistics/getStatistics");
+const {getAttendanceStat, getMeetingStatForUser} = require("../../Common/get-statistics");
 
 async function userDashboard(req, res, next) {
 

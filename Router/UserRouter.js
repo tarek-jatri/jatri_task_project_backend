@@ -2,12 +2,12 @@
 const express = require("express");
 
 //=> internal imports
-const {addAttendance, getAttendance} = require("../Controller/User/Attendance/UserAttendanceController");
+const {addAttendance, getAttendance} = require("../Controller/User/Attendance");
 const {
     addMeetingRequest,
     getMeetingDetails,
     updateMeetingDetails
-} = require("../Controller/User/Meeting/UserMeetingController");
+} = require("../Controller/User/Meeting");
 const userDashboard = require("../Controller/User/UserDashboard");
 const authUserTokenMiddleware = require("../Middlewares/common/authenticateUserToken");
 const sendAttendanceMail = require("../Middlewares/common/sendAttendanceMail");
