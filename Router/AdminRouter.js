@@ -39,11 +39,17 @@ const {
     attendanceSettings,
 } = require("../Controller/Admin/Settings");
 const sendAttendanceMail = require("../Middlewares/common/sendAttendanceMail");
+const authUserTokenMiddleware = require("../Middlewares/common/authenticateUserToken");
+const adminDashboard = require("../Controller/Admin/AdminDashboard");
 
 
 const router = express.Router();
 
+
 //=> Admin - User Routes
+//=> User Dashboard
+router.get("/dashboard", authAdminTokenMiddleware, adminDashboard);
+
 // creating user
 router.post(
     "/user",

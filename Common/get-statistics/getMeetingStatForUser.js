@@ -54,10 +54,24 @@ async function getMeetingStatForUser(userId, fromDate, toDate) {
                 "date": 1,
                 "count": 1,
             }
+        },
+        {
+            $group: {
+                _id: "$date",
+                status: {
+                    $push: {
+                        status: "$status",
+                        count: "$count"
+                    }
+                },
+                totalMeetings: {"$sum": "$count"}
+            }
         }
     ]);
 
     console.log(meetingStat);
+
+    return meetingStat;
 }
 
 module.exports = getMeetingStatForUser;

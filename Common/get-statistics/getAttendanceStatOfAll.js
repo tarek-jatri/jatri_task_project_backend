@@ -3,7 +3,12 @@ const User = require("../../Models/People");
 const Attendance = require("../../Models/Attendance");
 
 
-async function getAttendanceStatOfAll(fromTime, toTime) {
+async function getAttendanceStatOfAll(fromDate, toDate) {
+
+    // converting string to date object
+    const from = new Date(fromDate);
+    const to = new Date(toDate);
+
     // using object
     let totalEmployee = 0;
     try {
@@ -17,8 +22,8 @@ async function getAttendanceStatOfAll(fromTime, toTime) {
         {
             $match: {
                 timeDate: {
-                    $gte: fromTime,
-                    $lt: toTime
+                    $gte: from,
+                    $lt: to,
                 }
             }
         },
