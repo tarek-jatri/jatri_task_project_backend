@@ -69,8 +69,6 @@ async function getMeetingStatForUser(userId, fromDate, toDate) {
         }
     ]);
 
-    console.log(meetingStat);
-
     return meetingStat;
 }
 

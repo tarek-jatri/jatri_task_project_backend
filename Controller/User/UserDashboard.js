@@ -10,7 +10,7 @@ async function userDashboard(req, res, next) {
     // getting current date as to date
     const to = new Date(new Date().toISOString().split("T")[0] + "T23:59:00.000Z");
     // getting starting of this month's as from date
-    const from = new Date(to.getFullYear(), to.getMonth(), 1);
+    const from = new Date(to.getFullYear(), to.getMonth(), 2);
 
     try {
         // getting attendance stat

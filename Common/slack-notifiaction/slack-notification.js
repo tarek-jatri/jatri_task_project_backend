@@ -6,7 +6,6 @@ async function sendSlackNotification(meeting, state) {
     const blocks = state === "add"
         ? await getAddNotificationsBlock(meeting)
         : await getUpdateNotificationsBlock(meeting);
-    console.log(blocks);
     await axios.post(process.env.SLACK_NOTIFICATION_URL, blocks);
 }
 
