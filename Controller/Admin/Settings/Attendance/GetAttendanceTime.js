@@ -1,7 +1,7 @@
 // internal imports
-const Settings = require("../../Models/Settings");
+const Settings = require("../../../../Models/Settings");
 
-async function getAttendancetime() {
+async function getAttendanceTime() {
     const allSettings = await Settings.find();
     let attendanceSettings = {};
     for (const setting of allSettings) {
@@ -24,4 +24,4 @@ async function getAttendancetime() {
     }
 }
 
-module.exports = getAttendancetime;
+module.exports = getAttendanceTime;

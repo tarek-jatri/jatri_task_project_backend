@@ -1,16 +1,19 @@
 // giving attendance
 const Attendance = require("../../../Models/Attendance");
 const createError = require("http-errors");
-const {getAttendancetime} = require("../../../Common/settings");
+const {getAttendanceTime, getPermittedIPs} = require("../../Admin/Settings");
 
 async function addAttendance(req, res, next) {
     try {
+        console.log(req.ip);
+        console.log(await getPermittedIPs());
+
         // creating attendance obj
         const timestamp = new Date(req.body.timestamp);
 
         // setting the attendance status
         let status;
-        const {hour, minutes} = await getAttendancetime();
+        const {hour, minutes} = await getAttendanceTime();
         if (timestamp.getHours() < hour || timestamp.getHours() >= hour && timestamp.getMinutes() <= minutes)
             status = "present";
         else status = "late";

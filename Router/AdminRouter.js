@@ -37,9 +37,9 @@ const {
 } = require("../Controller/User/Meeting");
 const {
     attendanceSettings,
+    addIpSetting
 } = require("../Controller/Admin/Settings");
 const sendAttendanceMail = require("../Middlewares/common/sendAttendanceMail");
-const authUserTokenMiddleware = require("../Middlewares/common/authenticateUserToken");
 const adminDashboard = require("../Controller/Admin/AdminDashboard");
 
 
@@ -134,7 +134,9 @@ router.put(
 
 //=> Admin - Setting
 // setting attendance time
-router.post("/attendancetime", authAdminTokenMiddleware, attendanceSettings);
+router.post("/setting/attendanceTime", authAdminTokenMiddleware, attendanceSettings);
+// setting IP Permission
+router.post("/setting/ipPermissionSetting", authAdminTokenMiddleware, addIpSetting);
 
 
 module.exports = router;

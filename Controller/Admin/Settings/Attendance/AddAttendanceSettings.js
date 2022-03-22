@@ -2,9 +2,9 @@
 const createError = require("http-errors");
 
 // internal imports
-const Settings = require("../../../Models/Settings");
+const Settings = require("../../../../Models/Settings");
 
-async function attendanceSettings(req, res, next) {
+async function addAttendanceSettings(req, res, next) {
     try {
         const settingsObj = {
             name: req.body.name,
@@ -13,6 +13,7 @@ async function attendanceSettings(req, res, next) {
 
         const strSettings = JSON.stringify(settingsObj);
 
+        // saving to the database
         const settings = new Settings({
             setting: strSettings,
         });
@@ -22,10 +23,11 @@ async function attendanceSettings(req, res, next) {
             settingsObj,
             message: "Settings saved successfully"
         });
+        
     } catch (error) {
         next(createError(error));
     }
 }
 
 
-module.exports = attendanceSettings;
+module.exports = addAttendanceSettings;
