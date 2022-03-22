@@ -2,7 +2,7 @@
 const createError = require("http-errors");
 
 // internal imports
-const {getAttendanceStat, getMeetingStatForUser, getAttendanceStatOfAll} = require("../../Common/get-statistics");
+const {getAttendanceStat, getMeetingStatForAdmin, getAttendanceStatOfAll} = require("../../Common/get-statistics");
 
 async function adminDashboard(req, res, next) {
 
@@ -23,7 +23,7 @@ async function adminDashboard(req, res, next) {
         const attendanceStatAll = await getAttendanceStatOfAll(todayFromTime, todayToTime);
 
         // getting meeting stat
-        const meetingStat = await getMeetingStatForUser(req.userId, from, to);
+        const meetingStat = await getMeetingStatForAdmin(from, to);
 
 
         // checking if any attendance is available
