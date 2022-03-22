@@ -35,36 +35,46 @@ async function getMeetingStatForUser(userId, fromDate, toDate) {
                         $dateToString: {
                             format: "%Y-%m-%d", date: "$fromTime"
                         }
-                    },
-                    status: "$status"
+                    }
                 },
-                count: {$sum: 1},
+                pending: {
+                    $sum: {
+                        $cond: [
+                            {$eq: ["$status", "pending"]}, 1, 0
+                        ]
+                    }
+                },
+                accepted: {
+                    $sum: {
+                        $cond: [
+                            {$eq: ["$status", "accepted"]}, 1, 0
+                        ]
+                    }
+                },
+                rejected: {
+                    $sum: {
+                        $cond: [
+                            {$eq: ["$status", "rejected"]}, 1, 0
+                        ]
+                    }
+                },
+                totalMeetings: {$sum: 1}
             }
         },
         {
             $project: {
                 _id: 0,
                 date: "$_id.date",
-                status: "$_id.status",
-                count: "$count"
+                pending: 1,
+                accepted: 1,
+                rejected: 1,
+                totalMeetings: 1,
+
             }
         },
         {
             $sort: {
-                "date": 1,
-                "count": 1,
-            }
-        },
-        {
-            $group: {
-                _id: "$date",
-                status: {
-                    $push: {
-                        status: "$status",
-                        count: "$count"
-                    }
-                },
-                totalMeetings: {"$sum": "$count"}
+                date: 1,
             }
         }
     ]);
