@@ -20,6 +20,10 @@ const meetingSchema = mongoose.Schema(
             type: [mongoose.Types.ObjectId],
             ref: "People"
         },
+        room: {
+            type: String,
+            required: true,
+        },
         comments: {
             type: String,
             required: true,

@@ -1,13 +1,10 @@
 // giving attendance
 const Attendance = require("../../../Models/Attendance");
 const createError = require("http-errors");
-const {getAttendanceTime, getPermittedIPs} = require("../../Admin/Settings");
+const {getAttendanceTime} = require("../../Admin/Settings");
 
 async function addAttendance(req, res, next) {
     try {
-        console.log(req.ip);
-        console.log(await getPermittedIPs());
-
         // creating attendance obj
         const timestamp = new Date(req.body.timestamp);
 

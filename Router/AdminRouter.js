@@ -41,6 +41,7 @@ const {
 } = require("../Controller/Admin/Settings");
 const sendAttendanceMail = require("../Middlewares/common/sendAttendanceMail");
 const adminDashboard = require("../Controller/Admin/AdminDashboard");
+const validateIp = require("../Middlewares/common/validateIP");
 
 
 const router = express.Router();
@@ -85,7 +86,7 @@ router.delete(
 
 //=> Admin - Attendance Routes
 // adding attendance
-router.post("/attendance", authAdminTokenMiddleware, addAttendance, sendAttendanceMail);
+router.post("/attendance", authAdminTokenMiddleware, validateIp, addAttendance, sendAttendanceMail);
 
 // getting attendance
 router.get("/attendance", authAdminTokenMiddleware, getAttendance);

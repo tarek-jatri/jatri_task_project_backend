@@ -11,6 +11,7 @@ async function decisionMeeting(req, res, next) {
         if (status !== "accepted" && status !== "rejected") {
             throw createError("Invalid status provided");
         }
+        
         const updatedMeeting = await Meeting
             .findOneAndUpdate({
                 _id: req.params.id,

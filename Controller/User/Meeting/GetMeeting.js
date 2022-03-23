@@ -65,6 +65,7 @@ async function getMeetingDetails(req, res, next) {
                 date: from.date,
                 fromTime: from.strTime,
                 toTime: to.strTime,
+                room: meeting.room,
                 members: meeting.members,
                 comments: meeting.comments,
                 status: meeting.status,

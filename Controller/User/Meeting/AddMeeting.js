@@ -18,8 +18,8 @@ async function addMeetingRequest(req, res, next) {
             fromTime,
             toTime,
             members: req.body.members,
+            room: req.body.room,
             comments: req.body.comments,
-            status: req.body.status,
         });
 
         await meetingObj.save();

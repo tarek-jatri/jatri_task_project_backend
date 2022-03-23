@@ -13,6 +13,7 @@ const authUserTokenMiddleware = require("../Middlewares/common/authenticateUserT
 const sendAttendanceMail = require("../Middlewares/common/sendAttendanceMail");
 const meetingIdValidator = require("../Middlewares/meeting/meetingValidators");
 const validationErrorHandler = require("../Middlewares/common/validationErrorHandler");
+const validateIp = require("../Middlewares/common/validateIP");
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router.get("/dashboard", authUserTokenMiddleware, userDashboard);
 
 //=> User Attendance
 // adding attendance
-router.post("/attendance", authUserTokenMiddleware, addAttendance, sendAttendanceMail);
+router.post("/attendance", authUserTokenMiddleware, validateIp, addAttendance, sendAttendanceMail);
 
 // getting attendance
 router.get("/attendance", authUserTokenMiddleware, getAttendance);
