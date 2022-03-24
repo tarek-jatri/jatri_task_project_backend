@@ -4,6 +4,7 @@ const createError = require("http-errors");
 // internal imports
 const Meeting = require("../../../Models/Meeting");
 const sendSlackNotification = require("../../../Common/slack-notifiaction/slack-notification");
+const meetingTimeCollisionCheck = require("../../../Middlewares/meeting/meetingTimeCollisionCheck");
 
 // adding meeting request
 async function addMeetingRequest(req, res, next) {
@@ -11,6 +12,10 @@ async function addMeetingRequest(req, res, next) {
         // getting the dates
         const fromTime = new Date(req.body.date + "T" + req.body.fromTime);
         const toTime = new Date(req.body.date + "T" + req.body.toTime);
+
+        if (!await meetingTimeCollisionCheck(req.body.room, fromTime, toTime)) {
+            throw createError("Meeting Time Conflict");
+        }
 
         // creating meeting obj
         const meetingObj = new Meeting({
@@ -21,6 +26,7 @@ async function addMeetingRequest(req, res, next) {
             room: req.body.room,
             comments: req.body.comments,
         });
+
 
         await meetingObj.save();
 

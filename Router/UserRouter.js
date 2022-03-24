@@ -11,7 +11,7 @@ const {
 const userDashboard = require("../Controller/User/UserDashboard");
 const authUserTokenMiddleware = require("../Middlewares/common/authenticateUserToken");
 const sendAttendanceMail = require("../Middlewares/common/sendAttendanceMail");
-const meetingIdValidator = require("../Middlewares/meeting/meetingValidators");
+const meetingIdValidator = require("../Middlewares/meeting/meetingValidator");
 const validationErrorHandler = require("../Middlewares/common/validationErrorHandler");
 const validateIp = require("../Middlewares/common/validateIP");
 

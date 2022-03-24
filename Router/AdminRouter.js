@@ -24,7 +24,7 @@ const {
 
 const authAdminTokenMiddleware = require("../Middlewares/common/authenticateAdminToken");
 const validationErrorHandler = require("../Middlewares/common/validationErrorHandler");
-const meetingIdValidator = require("../Middlewares/meeting/meetingValidators");
+const {meetingValidator} = require("../Middlewares/meeting");
 
 const {
     addAttendance,
@@ -117,7 +117,7 @@ router.get("/meeting", authAdminTokenMiddleware, getMeetingDetails);
 // updating meeting
 router.put(
     "/meeting/:id",
-    meetingIdValidator,
+    meetingValidator,
     validationErrorHandler,
     authAdminTokenMiddleware,
     updateMeetingDetails
@@ -126,7 +126,7 @@ router.put(
 // changing meeting status
 router.put(
     "/meeting/status/:id",
-    meetingIdValidator,
+    meetingValidator,
     validationErrorHandler,
     authAdminTokenMiddleware,
     decisionMeeting

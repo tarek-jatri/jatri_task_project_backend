@@ -3,6 +3,7 @@ const createError = require('http-errors');
 
 // internal imports
 const Meeting = require("../../../Models/Meeting");
+const meetingTimeCollisionCheck = require("../../../Middlewares/meeting/meetingTimeCollisionCheck");
 
 async function decisionMeeting(req, res, next) {
     try {
@@ -11,7 +12,12 @@ async function decisionMeeting(req, res, next) {
         if (status !== "accepted" && status !== "rejected") {
             throw createError("Invalid status provided");
         }
-        
+
+        const meetingObj = await Meeting.findOne({_id: req.params.id});
+        if (!await meetingTimeCollisionCheck(meetingObj.room, meetingObj.fromTime, meetingObj.toTime)) {
+            throw createError("Meeting Time Conflict");
+        }
+
         const updatedMeeting = await Meeting
             .findOneAndUpdate({
                 _id: req.params.id,

@@ -29,7 +29,7 @@ async function sendAttendanceMail(req, res, next) {
             cid: "jatrilogo",
         }]
     });
-    console.log(`Mail sent to ${req.userEmail}`);
+    (`Mail sent to ${req.userEmail}`);
 }
 
 module.exports = sendAttendanceMail;

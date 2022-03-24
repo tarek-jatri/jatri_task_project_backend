@@ -4,19 +4,20 @@ const createError = require("http-errors");
 
 // internal imports
 const Meeting = require("../../Models/Meeting");
+const meetingTimeCollisionCheck = require("./meetingTimeCollisionCheck");
 
-const meetingIdValidator = [
+const meetingValidator = [
     check("id")
         .custom(async (value) => {
             try {
                 const meeting = await Meeting.findOne({_id: value});
                 if (!meeting) {
-                    throw createError("Invalid User Object Id inserted");
+                    throw createError("Invalid Meeting Object Id inserted");
                 }
             } catch (error) {
-                throw createError("Invalid User Object Id inserted");
+                throw error;
             }
         })
 ];
 
-module.exports = meetingIdValidator;
+module.exports = meetingValidator;
