@@ -12,15 +12,12 @@ async function addIpSetting(req, res, next) {
             ips: req.body.ips,
         }
 
-        // converting setting obj to string
-        const strIpSetting = JSON.stringify(ipSetting);
-
         // saving to the database
         const settings = new Settings({
-            setting: strIpSetting
+            setting: ipSetting
         })
         await settings.save();
-        
+
         res.status(200).json({
             ipSetting,
             message: "Settings saved successfully"

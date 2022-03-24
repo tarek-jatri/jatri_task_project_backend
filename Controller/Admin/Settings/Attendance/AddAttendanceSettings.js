@@ -10,20 +10,17 @@ async function addAttendanceSettings(req, res, next) {
             name: req.body.name,
             time: req.body.time,
         };
-
-        const strSettings = JSON.stringify(settingsObj);
-
         // saving to the database
         const settings = new Settings({
-            setting: strSettings,
+            setting: settingsObj,
         });
 
         await settings.save();
         res.status(200).json({
-            settingsObj,
+            settings,
             message: "Settings saved successfully"
         });
-        
+
     } catch (error) {
         next(createError(error));
     }

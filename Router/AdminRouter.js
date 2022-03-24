@@ -49,7 +49,10 @@ const router = express.Router();
 
 //=> Admin - User Routes
 //=> User Dashboard
-router.get("/dashboard", authAdminTokenMiddleware, adminDashboard);
+router.get(
+    "/dashboard",
+    authAdminTokenMiddleware,
+    adminDashboard);
 
 // creating user
 router.post(
@@ -61,10 +64,16 @@ router.post(
 );
 
 // reading user
-router.get("/user", authAdminTokenMiddleware, readUserInfos);
+router.get(
+    "/user",
+    authAdminTokenMiddleware,
+    readUserInfos);
 
 // getting user list
-router.get("/user/list", authAdminTokenMiddleware, usersList);
+router.get(
+    "/user/list",
+    authAdminTokenMiddleware,
+    usersList);
 
 // updating user
 router.put(
@@ -84,12 +93,24 @@ router.delete(
     deleteUser
 );
 
+
 //=> Admin - Attendance Routes
 // adding attendance
-router.post("/attendance", authAdminTokenMiddleware, validateIp, addAttendance, sendAttendanceMail);
+router.post(
+    "/attendance",
+    authAdminTokenMiddleware,
+    validateIp,
+    addAttendance,
+    sendAttendanceMail
+);
 
 // getting attendance
-router.get("/attendance", authAdminTokenMiddleware, getAttendance);
+router.get(
+    "/attendance",
+    authAdminTokenMiddleware,
+    getAttendance
+);
+
 
 // getting today's attendance of all employee also given date
 router.get(
@@ -109,10 +130,18 @@ router.get(
 
 //=> Admin - Meeting Routes
 // adding meeting
-router.post("/meeting", authAdminTokenMiddleware, addMeetingRequest);
+router.post(
+    "/meeting",
+    authAdminTokenMiddleware,
+    addMeetingRequest
+);
 
 // getting meeting
-router.get("/meeting", authAdminTokenMiddleware, getMeetingDetails);
+router.get(
+    "/meeting",
+    authAdminTokenMiddleware,
+    getMeetingDetails
+);
 
 // updating meeting
 router.put(
@@ -135,9 +164,15 @@ router.put(
 
 //=> Admin - Setting
 // setting attendance time
-router.post("/setting/attendanceTime", authAdminTokenMiddleware, attendanceSettings);
+router.post(
+    "/setting/attendanceTime",
+    authAdminTokenMiddleware,
+    attendanceSettings);
 // setting IP Permission
-router.post("/setting/ipPermissionSetting", authAdminTokenMiddleware, addIpSetting);
+router.post(
+    "/setting/ipPermissionSetting",
+    authAdminTokenMiddleware,
+    addIpSetting);
 
 
 module.exports = router;

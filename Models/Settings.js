@@ -4,7 +4,10 @@ const mongoose = require('mongoose');
 // defining the schema
 const settingsSchema = mongoose.Schema(
     {
-        setting: String,
+        setting: {
+            type: Object,
+            required: true,
+        },
     }
 );
 
