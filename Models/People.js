@@ -32,14 +32,17 @@ const peopleSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        department: {
+            type: Object,
+            required: true,
+        },
         lineManager: {
             type: mongoose.Types.ObjectId,
             ref: "People"
         },
         role: {
-            type: String,
-            enum: ["admin", "user", "super admin"],
-            default: "user",
+            type: Object,
+            required: true,
         },
         nid: {
             type: String,

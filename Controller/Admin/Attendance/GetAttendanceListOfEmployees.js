@@ -14,27 +14,61 @@ async function getAttendanceListOfEmployees(req, res, next) {
     let from, to;
     if (!req.query.date) {
         from = new Date(new Date().toISOString().split("T")[0]);
-        to = new Date(new Date().toISOString().split("T")[0] + "T12:00:00.000Z");
+        to = new Date(new Date().toISOString().split("T")[0] + "T23:59:00.000Z");
     } else {
         from = new Date(req.query.date);
-        to = new Date(req.query.date + "T12:00:00.000Z");
+        to = new Date(req.query.date + "T23:59:00.000Z");
     }
 
     // fetching the data
     try {
-        const todayAttendances = await Attendance
-            .find({
-                timeDate: {
-                    $gte: from,
-                    $lte: to,
+        const todayAttendances = await Attendance.aggregate([
+            {
+                $match: {
+                    timeDate: {
+                        $gte: from,
+                        $lte: to,
+                    }
                 }
-            })
-            .sort({timeDate: "asc"})
-            .select({
-                _id: 0,
-                __v: 0,
-            })
-            .populate("userId", "name");
+            },
+            {
+                $lookup: {
+                    from: 'peoples',
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            },
+            {
+                $match: {
+                    "user.department.name": "IT & Product Development",
+                    "user.department.team": {
+                        $in: ["Web Development"]
+                    }
+                }
+            },
+            {
+                $project: {
+                    userId: {
+                        _id: "$user._id",
+                        name: "$user.name"
+                    },
+                    timeDate: 1,
+                    status: 1,
+                }
+            },
+            {
+                $unwind: "$userId._id",
+            },
+            {
+                $unwind: "$userId.name",
+            },
+            {
+                $sort: {
+                    timeDate: 1,
+                }
+            }
+        ]);
 
         // checking if any attendance is given today
         if (todayAttendances && todayAttendances.length > 0) {
@@ -45,7 +79,7 @@ async function getAttendanceListOfEmployees(req, res, next) {
                 todayAttendances,
             });
         } else {
-            res.status(200).json({
+            res.status(500).json({
                 message: "No attendance on today!!!"
             });
         }

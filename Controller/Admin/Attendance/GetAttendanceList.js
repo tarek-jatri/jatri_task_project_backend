@@ -16,9 +16,9 @@ async function getAttendanceList(req, res, next) {
          */
         if (req.query.from && req.query.to) {
             from = new Date(req.query.from);
-            to = new Date(req.query.to + "T12:00:00.000Z");
+            to = new Date(req.query.to + "T23:59:00.000Z");
         } else {
-            to = new Date(new Date().toISOString().split("T")[0] + "T12:00:00.000Z");
+            to = new Date(new Date().toISOString().split("T")[0] + "T23:59:00.000Z");
             from = new Date(
                 new Date(new Date().setDate(to.getDate() - 30))
                     .toISOString()
@@ -59,7 +59,7 @@ async function getAttendanceList(req, res, next) {
                 attendances,
             });
         } else {
-            res.status(200).json({
+            res.status(500).json({
                 message: "No attendance found!!!",
             });
         }
