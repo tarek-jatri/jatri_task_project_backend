@@ -55,7 +55,9 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use("/admin", adminRouter);
 app.use("/login", loginRouter);
 app.use("/user", userRouter);
-
+app.get("/", (req, res) => {
+    res.send("Hello World");
+})
 //=> Error Handling
 // 404 Not found handler
 app.use(notFoundHandler);

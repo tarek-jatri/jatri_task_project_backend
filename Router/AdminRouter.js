@@ -66,7 +66,6 @@ router.post(
 // reading user
 router.get(
     "/user",
-    authAdminTokenMiddleware,
     readUserInfos);
 
 // getting user list
