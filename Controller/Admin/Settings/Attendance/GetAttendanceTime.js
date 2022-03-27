@@ -2,19 +2,13 @@
 const Settings = require("../../../../Models/Settings");
 
 async function getAttendanceTime() {
-    const allSettings = await Settings.find();
-    let attendanceSettings = {};
-    for (const setting of allSettings) {
-        const parsedSettings = JSON.parse(setting.setting);
-        if (parsedSettings.name === "Attendance") {
-            attendanceSettings = parsedSettings;
-            break;
-        }
-    }
+    const attendanceSettings = await Settings.find({
+        "setting.name": "Attendance"
+    });
     if (attendanceSettings && attendanceSettings.length > 0) {
         return {
-            hour: parseInt(attendanceSettings.time.split(":")[0]),
-            minutes: parseInt(attendanceSettings.time.split(":")[1]),
+            hour: parseInt(attendanceSettings[0].setting.time.split(":")[0]),
+            minutes: parseInt(attendanceSettings[0].setting.time.split(":")[1]),
         }
     } else {
         return {

@@ -32,13 +32,6 @@ const peopleSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        /**
-         *
-         *         department: {
-         *             type: Object,
-         *
-         *         },
-         */
         lineManager: {
             type: mongoose.Types.ObjectId,
             ref: "People"

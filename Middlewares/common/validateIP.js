@@ -9,6 +9,7 @@ async function validateIp(req, res, next) {
     try {
         const userIpAddresses = await getReqIpAddresses();
         const permittedIpAddresses = await getPermittedIPs();
+        console.log(userIpAddresses, permittedIpAddresses)
         if (permittedIpAddresses.includes(userIpAddresses[1]))
             next();
         else
