@@ -41,9 +41,9 @@ async function getAttendanceListOfEmployees(req, res, next) {
             },
             {
                 $match: {
-                    "user.department.name": "IT & Product Development",
+                    "user.department.name": req.userDepartment,
                     "user.department.team": {
-                        $in: ["Web Development"]
+                        $in: req.userRole.roles,
                     }
                 }
             },

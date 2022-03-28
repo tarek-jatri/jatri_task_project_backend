@@ -14,6 +14,7 @@ const authAdminTokenMiddleware = async (req, res, next) => {
         req.jatriId = decodePayload.jatriId;
         req.username = decodePayload.name;
         req.userRole = decodePayload.role;
+        req.userDepartment = decodePayload.department.name;
         req.userEmail = decodePayload.email;
         next();
     } catch {

@@ -9,11 +9,13 @@ const {
     updateMeetingDetails
 } = require("../Controller/User/Meeting");
 const userDashboard = require("../Controller/User/UserDashboard");
+const updateUserPassword = require("../Controller/User/UpdateUserPassword");
 const authUserTokenMiddleware = require("../Middlewares/common/authenticateUserToken");
 const sendAttendanceMail = require("../Middlewares/common/sendAttendanceMail");
 const meetingIdValidator = require("../Middlewares/meeting/meetingValidator");
 const validationErrorHandler = require("../Middlewares/common/validationErrorHandler");
 const validateIp = require("../Middlewares/common/validateIP");
+const {updateUserPasswordValidator} = require("../Middlewares/user/userValidators");
 
 const router = express.Router();
 
@@ -22,6 +24,9 @@ const router = express.Router();
 
 //=> User Dashboard
 router.get("/dashboard", authUserTokenMiddleware, userDashboard);
+
+//=> User Update Password
+router.post("/updatePassword", updateUserPasswordValidator, authUserTokenMiddleware, updateUserPassword);
 
 //=> User Attendance
 // adding attendance

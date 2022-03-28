@@ -26,7 +26,7 @@ async function login(req, res, next) {
                     jatriId: user.jatriId,
                     name: user.name,
                     email: user.email,
-                    designation: user.designation,
+                    department: user.department,
                     lineManager: user.lineManager !== null ? user.lineManager.name : "None",
                     role: user.role,
                 }
