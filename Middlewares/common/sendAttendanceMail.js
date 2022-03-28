@@ -12,12 +12,60 @@ async function sendAttendanceMail(req, res, next) {
             ? `<strong style="color: red;">${req.attendance.status.toUpperCase()}</strong>`
             : `<strong style="color: green;">${req.attendance.status.toUpperCase()}</strong>`;
 
-    const message = `<img src="cid:jatrilogo" width="100" height="60"><br>
-                        <strong>Jatri ID:</strong> ${req.jatriId}<br>
-                        <strong>Name:</strong> ${req.username}<br>
-                        <strong>Date:</strong> ${msgDate}<br>
-                        <strong>Time:</strong> ${strTime}<br>
-                        <strong>Status:</strong> ${statusStr}`;
+    // const message = `
+    //                     <strong>Jatri ID:</strong> ${req.jatriId}<br>
+    //                     <strong>Name:</strong> ${req.username}<br>
+    //                     <strong>Date:</strong> ${msgDate}<br>
+    //                     <strong>Time:</strong> ${strTime}<br>
+    //                     <strong>Status:</strong> ${statusStr}`;
+
+    const message = `<!DOCTYPE html>
+            <html>
+              <head>
+                <style>
+                  table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 80%;
+                  }
+                  td,th {
+                    border: 1px solid #dddddd;
+                    text-align: center;
+                    padding: 8px;
+                  }
+                  tr:nth-child(even) {
+                    background-color: #dddddd;
+                  }
+                  p{
+                    font-family: arial, sans-serif;
+                    font-size: 15px;
+                  }
+                </style>
+              </head>
+              <body>
+                <img src="cid:jatrilogo" width="100" height="60"><br>
+                <h2>Dear Concern,</h2>
+                <p>Your attendance details of today: </p>
+                <table>
+                  <tr>
+                    <th>Jatri ID</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                  </tr>
+                  <tr>
+                    <td>${req.jatriId}</td>
+                    <td>${req.username}</td>
+                    <td>${msgDate}</td>
+                    <td>${strTime}</td>
+                    <td>${statusStr}</td>
+                  </tr>
+                </table>
+              </body>
+            </html>
+            `;
+
 
     const result = await transporter.sendMail({
         to: req.userEmail,
