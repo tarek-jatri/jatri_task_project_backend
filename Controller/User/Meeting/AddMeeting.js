@@ -14,7 +14,7 @@ async function addMeetingRequest(req, res, next) {
         const toTime = new Date(req.body.date + "T" + req.body.toTime);
 
         if (!await meetingTimeCollisionCheck(req.body.room, fromTime, toTime)) {
-            throw createError("Meeting Time Conflict");
+            throw createError(400, "Meeting Time Conflict");
         }
 
         // creating meeting obj

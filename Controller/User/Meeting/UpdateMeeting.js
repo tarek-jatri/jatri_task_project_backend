@@ -23,7 +23,7 @@ async function updateMeetingDetails(req, res, next) {
         };
 
         if (!await meetingTimeCollisionCheck(meetingObj.room, meetingObj.fromTime, meetingObj.toTime)) {
-            throw createError("Meeting Time Conflict");
+            throw createError(400, "Meeting Time Conflict");
         }
 
         // updating meeting info
@@ -44,14 +44,14 @@ async function updateMeetingDetails(req, res, next) {
                 message: "meeting updated successfully",
             });
         } else {
-            throw createError("Meeting has already been accepted or rejected");
+            throw createError(400, "Meeting has already been accepted or rejected");
         }
 
-        // sending slack notification
-        await sendSlackNotification({
-            updatedMeeting,
-            adminName: req.userEmail.split("@")[0],
-        }, "update");
+        // // sending slack notification
+        // await sendSlackNotification({
+        //     updatedMeeting,
+        //     adminName: req.userEmail.split("@")[0],
+        // }, "update");
 
     } catch (error) {
         next(createError(error));

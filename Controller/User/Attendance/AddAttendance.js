@@ -27,7 +27,7 @@ async function addAttendance(req, res, next) {
         });
 
         if (isValidDate) {
-            throw createError("Attendance already given on today");
+            throw createError(400, "Attendance already given on today");
         }
 
 

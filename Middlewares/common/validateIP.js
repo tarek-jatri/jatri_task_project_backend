@@ -12,9 +12,9 @@ async function validateIp(req, res, next) {
         if (permittedIpAddresses.includes(userIpAddresses[1]))
             next();
         else
-            throw createError("Access denied due to unauthorized Public IP address: " + userIpAddresses[1]);
+            throw createError(403.6, "Access denied due to unauthorized Public IP address: " + userIpAddresses[1]);
     } catch (error) {
-        next(createError(error))
+        next(createError(error));
     }
 }
 

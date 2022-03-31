@@ -53,29 +53,32 @@ async function getMeetingDetails(req, res, next) {
                 .populate("userId", "name -_id")
                 .populate("members", "name -_id");
         }
-
-        // constructing payload
-        const payloads = [];
-        for (const meeting of meetings) {
-            const from = formatTimestamp(meeting.fromTime);
-            const to = formatTimestamp(meeting.toTime);
-            const payload = {
-                meetingId: meeting._id,
-                name: meeting.userId.name,
-                date: from.date,
-                fromTime: from.strTime,
-                toTime: to.strTime,
-                room: meeting.room,
-                members: meeting.members,
-                comments: meeting.comments,
-                status: meeting.status,
+        if (meetings && meetings.length > 0) {
+            // constructing payload
+            const payloads = [];
+            for (const meeting of meetings) {
+                const from = formatTimestamp(meeting.fromTime);
+                const to = formatTimestamp(meeting.toTime);
+                const payload = {
+                    meetingId: meeting._id,
+                    name: meeting.userId.name,
+                    date: from.date,
+                    fromTime: from.strTime,
+                    toTime: to.strTime,
+                    room: meeting.room,
+                    members: meeting.members,
+                    comments: meeting.comments,
+                    status: meeting.status,
+                }
+                payloads.push(payload);
             }
-            payloads.push(payload);
-        }
 
-        res.status(200).json({
-            payloads,
-        });
+            res.status(200).json({
+                payloads,
+            });
+        } else {
+            throw createError(400, "No meeting found!!!");
+        }
     } catch (error) {
         next(createError(error));
     }

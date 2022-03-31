@@ -33,13 +33,13 @@ async function updateUserPassword(req, res, next) {
                             message: "User's password updated successfully",
                         });
                     } else
-                        throw createError("Password doesn't match");
+                        throw createError(403, "Password doesn't match");
                 } else
-                    throw createError("This password is already in use");
+                    throw createError(400, "This password is already in use");
             } else
-                throw createError("Old Password doesn't match");
+                throw createError(403, "Old Password doesn't match");
         } else {
-            throw createError("User Not Found");
+            throw createError(400, "User Not Found");
         }
     } catch (error) {
         next(createError(error));

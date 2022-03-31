@@ -34,9 +34,7 @@ async function adminDashboard(req, res, next) {
                 meetingStat
             });
         } else {
-            res.status(200).json({
-                message: "No attendance found!!!",
-            });
+            throw createError(400, "No Attendance Found!!!");
         }
     } catch (error) {
         next(createError(error));

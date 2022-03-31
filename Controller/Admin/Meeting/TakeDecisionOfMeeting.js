@@ -10,12 +10,12 @@ async function decisionMeeting(req, res, next) {
         const status = req.query.status.toLowerCase();
 
         if (status !== "accepted" && status !== "rejected") {
-            throw createError("Invalid status provided");
+            throw createError(400, "Invalid status provided");
         }
 
         const meetingObj = await Meeting.findOne({_id: req.params.id});
         if (!await meetingTimeCollisionCheck(meetingObj.room, meetingObj.fromTime, meetingObj.toTime)) {
-            throw createError("Meeting Time Conflict");
+            throw createError(400, "Meeting Time Conflict");
         }
 
         const updatedMeeting = await Meeting
@@ -34,7 +34,7 @@ async function decisionMeeting(req, res, next) {
                 message: "meeting updated successfully",
             });
         } else {
-            throw createError("Meeting has already been accepted or rejected");
+            throw createError(400, "Meeting has already been accepted or rejected");
         }
     } catch (error) {
         next(createError(error));

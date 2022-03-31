@@ -20,15 +20,17 @@ async function userDashboard(req, res, next) {
         const meetingStat = await getMeetingStatForUser(req.userId, from, to);
 
         // checking if any attendance is available
-        if (attendanceStat) {
+        if (attendanceStat && meetingStat) {
             res.status(200).json({
                 attendanceStat,
                 meetingStat
             });
         } else {
-            res.status(200).json({
-                message: "No attendance found!!!",
-            });
+            if (!attendanceStat)
+                throw createError(400, "No attendance found!!!");
+
+            if (!meetingStat)
+                throw createError(400, "No meeting found!!!");
         }
     } catch (error) {
         next(createError(error));

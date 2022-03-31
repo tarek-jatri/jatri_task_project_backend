@@ -9,7 +9,7 @@ async function readUserInfos(req, res, next) {
         let users;
         /**
          * checking if the JatriId is sent with the api or not
-         * if JatriId is not send then response with all the users info
+         * if JatriId is not send then response with all the user's info
          * otherwise only searched id's info
          */
         const jatriId = req.query.jatriId;
@@ -39,9 +39,7 @@ async function readUserInfos(req, res, next) {
                 users,
             })
         } else {
-            res.status(200).json({
-                message: "No user found",
-            })
+            throw createError(400, "No user found!!!")
         }
     } catch (error) {
         next(error);

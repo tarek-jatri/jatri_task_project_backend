@@ -38,9 +38,7 @@ async function getAttendance(req, res, next) {
                 attendances,
             });
         } else {
-            res.status(200).json({
-                message: "No attendance found!!!",
-            });
+            throw createError(400, "No attendance found!!!")
         }
 
     } catch (error) {

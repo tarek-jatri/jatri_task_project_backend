@@ -18,7 +18,7 @@ const authAdminTokenMiddleware = async (req, res, next) => {
         req.userEmail = decodePayload.email;
         next();
     } catch {
-        next(createError("Authentication failed!!!"));
+        next(createError(401, "Authentication failed!!!"));
     }
 }
 

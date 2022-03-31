@@ -21,11 +21,9 @@ async function usersList(req, res, next) {
         if (users && users.length > 0) {
             res.status(200).json({
                 users,
-            })
+            });
         } else {
-            res.status(200).json({
-                message: "No user found",
-            })
+            throw createError(400, "No users found!!!")
         }
     } catch (error) {
         next(error);

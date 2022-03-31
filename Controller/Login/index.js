@@ -50,10 +50,10 @@ async function login(req, res, next) {
                     message: "Login Successful"
                 });
             } else {
-                throw createError("Login failed! Please try again..");
+                throw createError(401, "Login failed! Please try again..");
             }
         } else {
-            throw createError("Login failed! Please try again..");
+            throw createError(401, "Login failed! Please try again..");
         }
     } catch (error) {
         next(error);

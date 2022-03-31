@@ -79,9 +79,7 @@ async function getAttendanceListOfEmployees(req, res, next) {
                 todayAttendances,
             });
         } else {
-            res.status(500).json({
-                message: "No attendance on today!!!"
-            });
+            throw createError(400, "No attendance found on today!!!")
         }
     } catch (error) {
         next(createError(error));
