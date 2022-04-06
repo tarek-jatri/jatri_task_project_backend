@@ -8,7 +8,7 @@ const authUserTokenMiddleware = async (req, res, next) => {
         const token = req.signedCookies[process.env.COOKIE_NAME];
         const decodePayload = await jwt.verify(token, process.env.JWT_SECRET);
         if (decodePayload.role.name !== "user") {
-            throw createError("Authentication Failed!!!");
+            throw createError(401, "Authentication Failed!!!");
         }
         req.userId = decodePayload._id;
         req.jatriId = decodePayload.jatriId;

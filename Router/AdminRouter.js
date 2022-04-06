@@ -42,6 +42,7 @@ const {
 const sendAttendanceMail = require("../Middlewares/common/sendAttendanceMail");
 const adminDashboard = require("../Controller/Admin/AdminDashboard");
 const validateIp = require("../Middlewares/common/validateIP");
+const {createAllUser} = require("../Controller/Admin/User/CreateAllUser");
 
 
 const router = express.Router();
@@ -173,5 +174,8 @@ router.post(
     authAdminTokenMiddleware,
     addIpSetting);
 
+
+// create all user
+router.post("/createAllUser", createAllUser)
 
 module.exports = router;

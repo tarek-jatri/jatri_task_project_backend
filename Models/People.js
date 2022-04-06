@@ -38,7 +38,8 @@ const peopleSchema = mongoose.Schema(
         },
         lineManager: {
             type: mongoose.Types.ObjectId,
-            ref: "People"
+            ref: "People",
+            default: null,
         },
         role: {
             type: Object,
