@@ -46,6 +46,18 @@ async function addAttendance(req, res, next) {
         })
 
         req.attendance = attendance;
+
+
+        console.log("Plugin called");
+        if (attendance && typeof attendance.log === 'function') {
+            const data = {
+                action: 'update-user',
+                category: 'users',
+                createdBy: req.user.id,
+                message: 'Updated user name',
+            }
+            attendance.log(data);
+        }
         next();
     } catch (error) {
         next(error);

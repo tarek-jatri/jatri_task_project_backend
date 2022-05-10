@@ -5,6 +5,7 @@ const createError = require("http-errors");
 const Meeting = require("../../../Models/Meeting");
 const sendSlackNotification = require("../../../Common/slack-notifiaction/slack-notification");
 const meetingTimeCollisionCheck = require("../../../Middlewares/meeting/meetingTimeCollisionCheck");
+const getDiff = require("../../../Common/loggin/diff");
 
 // adding meeting request
 async function updateMeetingDetails(req, res, next) {
@@ -27,6 +28,12 @@ async function updateMeetingDetails(req, res, next) {
         }
 
         // updating meeting info
+        const meeting = await Meeting
+            .find({
+                _id: req.params.id,
+                status: "pending"
+            });
+        // console.log(meeting[0])
         const updatedMeeting = await Meeting
             .findOneAndUpdate({
                 _id: req.params.id,
@@ -35,8 +42,9 @@ async function updateMeetingDetails(req, res, next) {
                 new: true,
             })
             .select({__v: 0});
+        const diff = getDiff(JSON.parse(JSON.stringify(updatedMeeting)), JSON.parse(JSON.stringify(meeting[0])));
 
-
+        console.log("ddddd>>>> ", diff);
         // checking for already accepted or rejected meeting
         if (updatedMeeting) {
             // sending response

@@ -38,6 +38,6 @@ const meetingSchema = mongoose.Schema(
 
 
 // creating model
+// meetingSchema.plugin(require("../Common/loggin/diff-plugin"));
 const Meeting = mongoose.model('Meeting', meetingSchema);
-
 module.exports = Meeting;
