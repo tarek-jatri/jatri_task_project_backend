@@ -21,6 +21,7 @@ const attendanceSchema = mongoose.Schema(
 
 
 // creating model
+attendanceSchema.plugin(require("../Common/diff-pluggin"));
 const Attendance = mongoose.model('Attendance', attendanceSchema);
 
 module.exports = Attendance;

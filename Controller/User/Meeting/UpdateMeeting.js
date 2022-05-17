@@ -34,7 +34,7 @@ async function updateMeetingDetails(req, res, next) {
             }, meetingObj, {
                 new: true,
             })
-            .select({__v: 0});
+            .select({__v: 0}).lean();
 
 
         // checking for already accepted or rejected meeting
