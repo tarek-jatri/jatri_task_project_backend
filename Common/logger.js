@@ -1,5 +1,5 @@
 const {detailedDiff} = require("deep-object-diff");
-const Log = require("../models/Log");
+const Log = require("../Models/Logger");
 
 async function logger({current, previous, method, action, ip, apiUrl, model, documentId, requestedBy}) {
     try {

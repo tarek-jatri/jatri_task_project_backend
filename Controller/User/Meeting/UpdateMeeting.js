@@ -25,7 +25,6 @@ async function updateMeetingDetails(req, res, next) {
         if (!await meetingTimeCollisionCheck(meetingObj.room, meetingObj.fromTime, meetingObj.toTime)) {
             throw createError(400, "Meeting Time Conflict");
         }
-
         // updating meeting info
         const updatedMeeting = await Meeting
             .findOneAndUpdate({

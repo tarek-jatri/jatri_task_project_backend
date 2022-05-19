@@ -1,34 +1,40 @@
 const {detailedDiff} = require("deep-object-diff");
-let previous, current = {};
+const logger = require("./logger")
+let previous, current, data = {};
 
 const plugin = function (schema) {
-    schema.pre('findOneAndUpdate', async function () {
-        // console.dir(this);
+    schema.pre('findOneAndUpdate', async function (next, req) {
+        console.log(">>>>>>>>>>>>>>>>>>>>>> req: ")
+        console.log(this);
         // console.dir(this.model.modelName)
         previous = await this.model.findOne(this.getQuery()).select({__v: 0}).lean();
+        next()
         // console.log(docToUpdate); // The document that `findOneAndUpdate()` will modify
     });
     schema.post('findOneAndUpdate', doc => {
-        console.log(this)
         // console.log("Entered ", doc)
         current = doc;
         delete current.__v;
         delete previous.__v;
-        // console.log("current ", current)
-        console.log("From findOneAndUpdate current: ", current, "\nprevious ", previous);
-        const before = detailedDiff(current, previous);
-        const after = detailedDiff(previous, current);
-        console.log("before: ", before, "\nafter: ", after,);
+
+    })
+
+    schema.pre('save', (next, {req, attendance}) => {
+        // data = {
+        //     method: req.method,
+        //     action: "CREATE",
+        //     ip: req.ip,
+        //     apiUrl: req.protocol + '://' + req.get('host') + req.originalUrl,
+        //     requestedBy: req.userId,
+        // }
+        next();
     })
 
     schema.post('save', doc => {
-        // console.log("Entered ", doc)
+        console.log("~~~~~~~~~~~~~~~~~~~~~~")
+        console.dir(this.model.modelName)
         current = doc.toObject({transform: false});
-
-        console.log("From findOneAndUpdate current: ", current, "\nprevious ", previous);
-        const before = detailedDiff(current, previous);
-        const after = detailedDiff(previous, current);
-        console.log("before: ", before, "\nafter: ", after);
+        console.log("Current ", current)
     })
 }
 
